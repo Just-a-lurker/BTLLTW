@@ -1,9 +1,13 @@
-﻿@model IEnumerable<BTLW.Models.HoaDonNhap>
+﻿@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<HoaDonNhap>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     ViewData["Title"] = "HDN";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+
+<h1>Hóa đơn nhập</h1>
 
 <input type="button" value="Thêm" onclick="location.href='@Url.Action("ThemHDN", "Admin")'" />
 <table class="table" id="table1">
@@ -47,10 +51,14 @@
             </td>
             <td>
                     <a asp-action="SuaHDN" asp-route-soHDN="@item.SoHdn">Sửa</a> |
-                    <a asp-action="Details" asp-route-soHDN="@item.SoHdn">Details</a> |
+                    <a asp-action="CTHDN" asp-route-soHDN="@item.SoHdn">Chi tiết</a> |
                     <a asp-action="XoaHDN" asp-route-soHDN="@item.SoHdn">Xóa</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+<div class="product__pagination">
+    @Html.PagedListPager(Model, page =>Url.Action("HDN", new{page = page}))
+</div>

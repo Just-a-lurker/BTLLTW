@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using BTLW.Models;
 
 namespace BTLW.Models;
 
@@ -42,6 +43,8 @@ public partial class Lttqnhom6Context : DbContext
     public virtual DbSet<NhanVien> NhanViens { get; set; }
 
     public virtual DbSet<NuocSx> NuocSxes { get; set; }
+
+    public virtual DbSet<TaiKhoan> TaiKhoans { get; set; }
 
     public virtual DbSet<TheLoai> TheLoais { get; set; }
 
@@ -410,6 +413,28 @@ public partial class Lttqnhom6Context : DbContext
             entity.Property(e => e.Tennuocsx)
                 .HasMaxLength(100)
                 .HasColumnName("tennuocsx");
+        });
+
+        modelBuilder.Entity<TaiKhoan>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToTable("TaiKhoan");
+
+            entity.Property(e => e.MaNv)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("MaNV");
+            entity.Property(e => e.MaTk).HasColumnName("MaTK");
+            entity.Property(e => e.MatKhau).HasMaxLength(50);
+            entity.Property(e => e.TenTk)
+                .HasMaxLength(50)
+                .HasColumnName("TenTK");
+
+            entity.HasOne(d => d.MaNvNavigation).WithMany()
+                .HasForeignKey(d => d.MaNv)
+                .HasConstraintName("FK_TaiKhoan_NhanVien");
         });
 
         modelBuilder.Entity<TheLoai>(entity =>

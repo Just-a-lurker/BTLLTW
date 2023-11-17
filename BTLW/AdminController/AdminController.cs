@@ -1,4 +1,5 @@
-﻿using BTLW.Models;
+﻿using Azure;
+using BTLW.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using X.PagedList;
@@ -63,17 +64,12 @@ namespace BTLW.AdminController
         [Route("SuaHDN")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult SuaDK(HoaDonNhap hoaDonNhap)
+        public IActionResult SuaHDN(HoaDonNhap hoaDonNhap)
         {
-            if (ModelState.IsValid)
-            {
                 db.Update(hoaDonNhap);
                 db.SaveChanges();
                 return RedirectToAction("HDN");
-            }
-            return View(hoaDonNhap);
         }
-
         [Route("XoaHDN")]
         [HttpGet]
         public IActionResult XoaHDN(string soHDN)
@@ -83,12 +79,53 @@ namespace BTLW.AdminController
             if (checkMa.Count() > 0)
             {
                 TempData["Message1"] = "Xóa hết chi tiết HĐN trước.";
-                return RedirectToAction("HDN", "Admin");
+                return RedirectToAction("CTHDN", "Admin", new
+                {
+                    soHDN = soHDN
+                });
             }
             db.Remove(db.HoaDonNhaps.Find(soHDN));
             db.SaveChanges();
-            TempData["Message1"] = "Da xoa sp";
             return RedirectToAction("HDN", "Admin");
+        }
+
+        public IActionResult CTHDN(string soHDN, int? page)
+        {
+            ViewBag.SoHDN = soHDN;
+            int pageSize = 10;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+            var lstCTHDN = db.ChiTietHdns.Where(x => x.SoHdn.Equals(soHDN)).OrderBy(n => n.SoHdn);
+            PagedList<ChiTietHdn> lst = new PagedList<ChiTietHdn>(lstCTHDN, pageNumber, pageSize);
+            return View(lst);
+        }
+
+        [Route("ThemCTHDN")]
+        [HttpGet]
+        public IActionResult ThemCTHDN()
+        {
+            ViewBag.MaNoithat = new SelectList(db.DmnoiThats.ToList(), "MaNoiThat", "TenNoiThat");
+            ViewBag.SoHdn = new SelectList(db.HoaDonNhaps.ToList(), "SoHdn", "SoHdn");
+            return View();
+        }
+        [Route("ThemCTHDN")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ThemCTHDN(ChiTietHdn chiTietHdn)
+        {
+            TempData["Message"] = "";
+            var checkMa = db.ChiTietHdns.Where(x => x.SoHdn == chiTietHdn.SoHdn && x.MaNoithat == chiTietHdn.MaNoithat).ToList();
+            if (checkMa.Count() > 0)
+            {
+                TempData["Message"] = "Khong them duoc vi trung ma HD va ma noi that";
+                return RedirectToAction("ThemCTHDN", "Admin");
+            }
+            else
+            {
+                string temp = chiTietHdn.SoHdn;
+                db.ChiTietHdns.Add(chiTietHdn);
+                db.SaveChanges();
+                return RedirectToAction("CTHDN", new { soHDN = temp });
+            }
         }
     }
 }

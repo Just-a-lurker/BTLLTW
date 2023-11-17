@@ -1,0 +1,68 @@
+﻿@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<ChiTietHdn>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "CTHDN";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Chi tiết @ViewBag.SoHDN </h1>
+
+<p>@TempData["Message1"]</p>
+
+<input type="button" value="Thêm" onclick="location.href='@Url.Action("ThemCTHDN", "Admin")'" />
+
+<table class="table" id="table1">
+    <thead>
+        <tr>
+            <th>
+                Mã nội thất
+            </th>
+            <th>
+                Số HĐN
+            </th>
+            <th>
+                Số lượng
+            </th>
+            <th>
+                Đơn giá
+            </th>
+            <th>
+                Giảm giá
+            </th>
+            <th>
+                Thành tiền
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaNoithat)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoHdn)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoLuong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DonGia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GiamGia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ThanhTien)
+            </td>
+            <td>
+                    <a asp-action="SuaCTHDN" asp-route-soHDN="@item.SoHdn">Sửa</a> |
+                    <a asp-action="XoaCTHDN" asp-route-soHDN="@item.SoHdn">Xóa</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
