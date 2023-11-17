@@ -1,0 +1,56 @@
+﻿@model IEnumerable<BTLW.Models.HoaDonNhap>
+
+@{
+    ViewData["Title"] = "HDN";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<input type="button" value="Thêm" onclick="location.href='@Url.Action("ThemHDN", "Admin")'" />
+<table class="table" id="table1">
+    <thead>
+        <tr>
+            <th>
+                Số HĐN
+            </th>
+            <th>
+                Ngày nhập
+            </th>
+            <th>
+                Tổng tiền
+            </th>
+            <th>
+                Mã NCC
+            </th>
+            <th>
+                Mã NV
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoHdn)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayNhap)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TongTien)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaNcc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaNv)
+            </td>
+            <td>
+                    <a asp-action="SuaHDN" asp-route-soHDN="@item.SoHdn">Sửa</a> |
+                    <a asp-action="Details" asp-route-soHDN="@item.SoHdn">Details</a> |
+                    <a asp-action="XoaHDN" asp-route-soHDN="@item.SoHdn">Xóa</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

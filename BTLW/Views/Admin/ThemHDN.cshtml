@@ -1,0 +1,46 @@
+﻿@model BTLW.Models.HoaDonNhap
+
+@{
+    ViewData["Title"] = "ThemHDN";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Thêm HDN</h1>
+
+<p>@TempData["Message"]</p>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ThemHDN">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Số HĐN</label>
+                <input asp-for="SoHdn" class="form-control" />
+                <span asp-validation-for="SoHdn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Mã NV</label>
+                <select asp-for="MaNv" class ="form-control" asp-items="ViewBag.MaNv"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Mã NCC</label>
+                <select asp-for="MaNcc" class ="form-control" asp-items="ViewBag.MaNcc"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Ngày nhập</label>
+                <input asp-for="NgayNhap" class="form-control" />
+                <span asp-validation-for="NgayNhap" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Tổng tiền</label>
+                <input asp-for="TongTien" class="form-control" />
+                <span asp-validation-for="TongTien" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Tạo" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+

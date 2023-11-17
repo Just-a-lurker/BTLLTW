@@ -203,8 +203,8 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/icons/mdi.html">
-                            <span class="menu-title">Icons</span>
+                        <a class="nav-link" asp-controller="Admin" asp-action="HDN">
+                            <span class="menu-title">Hóa đơn nhập</span>
                             <i class="mdi mdi-contacts menu-icon"></i>
                         </a>
                     </li>
@@ -261,7 +261,20 @@
                     </li>
                 </ul>
             </nav>
-        @RenderBody()
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    @RenderBody()
+                </div>
+                <!-- content-wrapper ends -->
+                <!-- partial:../../partials/_footer.html -->
+                <footer class="footer">
+                    <div class="container-fluid d-flex justify-content-between">
+                        <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">Copyright © bootstrapdash.com 2021</span>
+                        <span class="float-none float-sm-end mt-1 mt-sm-0 text-end"> Free <a href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Bootstrap admin template</a> from Bootstrapdash.com</span>
+                    </div>
+                </footer>
+                <!-- partial -->
+            </div>
         </div>
         <!-- page-body-wrapper ends -->
     </div>

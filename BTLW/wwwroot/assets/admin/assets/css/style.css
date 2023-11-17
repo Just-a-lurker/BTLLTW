@@ -50,8 +50,21 @@
 /*-------------------------------------------------------------------*/
 /* === SCSS Compass Functions === */
 
+#table1 {
+    border: solid thin black;
+}
+
+#table1 td {
+    border: solid thin black;
+}
+
+#table1 th {
+    border: solid thin black;
+}
+
+
 @-webkit-keyframes flash {
-  0% {
+    0% {
     opacity: 1; }
   25% {
     opacity: 0; }
