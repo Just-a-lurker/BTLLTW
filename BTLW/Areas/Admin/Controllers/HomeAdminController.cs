@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BTLW.Models.Authentication;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BTLW.Areas.Admin.Controllers
 {
@@ -9,6 +10,7 @@ namespace BTLW.Areas.Admin.Controllers
 	{
 		[Route("")]
 		[Route("index")]
+		[Authentication]
 		public IActionResult Index()
 		{
 			return View();

@@ -14,7 +14,7 @@ namespace BTLW.Areas.Admin.Controllers
 				return View();
 			}else
 			{
-				return RedirectToAction("Index","Home");
+				return RedirectToAction("index", "admin");
 			}
 			
 		}
@@ -27,10 +27,16 @@ namespace BTLW.Areas.Admin.Controllers
 				if (u!=null)
 				{
 					HttpContext.Session.SetString("TenTK", u.TenTk.ToString());
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("index", "admin");
                 }
 			}
 			return View();
 		}
-	}
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            HttpContext.Session.Remove("TenTK");
+            return RedirectToAction("Login", "Access");
+        }
+    }
 }

@@ -1,0 +1,37 @@
+﻿@model BTLW.ViewModel.RegisterVM;
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_LayoutRegister.cshtml";
+}
+
+<h2>Register</h2>
+@using (Html.BeginForm("Register","Account",FormMethod.Post))
+{
+    <div class="group">
+        <div class="form-control-lg">
+            @Html.LabelFor(temp=>temp.TenTK)
+            @Html.TextBoxFor(temp=>temp.TenTK,new{placeholder="UserName",@class="form-control"})
+            @Html.ValidationMessageFor(temp=>temp.TenTK)
+        </div>
+        <div class="form-control-lg">
+            @Html.LabelFor(temp=>temp.MatKhau)
+            @Html.PasswordFor(temp=>temp.MatKhau,new{placeholder="Password",@class="form-control"})
+            @Html.ValidationMessageFor(temp=>temp.MatKhau)
+        </div>
+        <div class="form-control-lg">
+            @Html.LabelFor(temp=>temp.ConfirmPassword)
+            @Html.PasswordFor(temp=>temp.ConfirmPassword,new{placeholder="Confirm Password",@class="form-control"})
+            @Html.ValidationMessageFor(temp=>temp.ConfirmPassword)
+        </div>
+        <div class="mb-4">
+            <div class="form-check">
+                <label class="form-check-label text-muted">
+                    <input type="checkbox" class="form-check-input"> I agree to all Terms & Conditions
+                </label>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">Register</button>
+    </div>
+   
+}
+
