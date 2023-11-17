@@ -4,11 +4,6 @@ namespace BTLW.Controllers
 {
 	public class MainController : Controller
 	{
-		public IActionResult Home()
-		{
-			return View();
-		}
-
 		public IActionResult Shop()
 		{
 			return View();
