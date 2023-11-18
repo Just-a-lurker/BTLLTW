@@ -127,5 +127,31 @@ namespace BTLW.AdminController
                 return RedirectToAction("CTHDN", new { soHDN = temp });
             }
         }
+
+        [Route("SuaCTHDN")]
+        [HttpGet]
+        public IActionResult SuaCTHDN(string soHDN, string maNT)
+        {
+            var DK = db.ChiTietHdns.Find(maNT, soHDN);
+            return View(DK);
+        }
+        [Route("SuaCTHDN")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SuaCTHDN(ChiTietHdn chiTietHdn)
+        {
+            db.Update(chiTietHdn);
+            db.SaveChanges();
+            return RedirectToAction("CTHDN", new { soHDN = chiTietHdn.SoHdn });
+        }
+
+        [Route("XoaCTHDN")]
+        [HttpGet]
+        public IActionResult XoaCTHDN(string soHDN, string maNT)
+        {
+            db.Remove(db.ChiTietHdns.Find(maNT, soHDN));
+            db.SaveChanges();
+            return RedirectToAction("CTHDN", new { soHDN = soHDN });
+        }
     }
 }

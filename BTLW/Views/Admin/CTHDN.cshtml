@@ -59,8 +59,8 @@
                 @Html.DisplayFor(modelItem => item.ThanhTien)
             </td>
             <td>
-                    <a asp-action="SuaCTHDN" asp-route-soHDN="@item.SoHdn">Sửa</a> |
-                    <a asp-action="XoaCTHDN" asp-route-soHDN="@item.SoHdn">Xóa</a>
+                    <a asp-action="SuaCTHDN" asp-route-soHDN="@item.SoHdn" asp-route-maNT="@item.MaNoithat">Sửa</a> |
+                    <a asp-action="XoaCTHDN" asp-route-soHDN="@item.SoHdn" asp-route-maNT="@item.MaNoithat">Xóa</a>
             </td>
         </tr>
 }
