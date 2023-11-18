@@ -1,9 +1,10 @@
 ﻿
 @{
-    ViewData["Title"] = "Home2";
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LayoutBeFurniture.cshtml";
 }
-
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<DmnoiThat>
 <!--mini cart-->
 <div class="mini_cart">
     <div class="cart_gallery">
@@ -86,7 +87,7 @@
                                 <div class="slider_text_shape">
                                     <img src="../assets/hutche/assets/img/slider/slider-text-shape.png" alt="">
                                     <div class="slider_btn">
-                                        <a class="btn btn-link" href="shop-left-sidebar.html">SHOP NOW</a>
+                                        <a class="btn btn-link" asp-controller="Main" asp-action="Shop">SHOP NOW</a>
                                     </div>
                                 </div>
                             </div>
@@ -101,7 +102,7 @@
                                 <div class="slider_text_shape">
                                     <img src="../assets/hutche/assets/img/slider/slider-text-shape.png" alt="">
                                     <div class="slider_btn">
-                                        <a class="btn btn-link" href="shop-left-sidebar.html">SHOP NOW</a>
+                                        <a class="btn btn-link" asp-controller="Main" asp-action="Shop">SHOP NOW</a>
                                     </div>
                                 </div>
                             </div>
@@ -213,193 +214,36 @@
             <div class="tab-pane fade show active" id="products" role="tabpanel">
                 <div class="product_gallery">
                     <div class="row">
-
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <article class="single_product wow fadeInUp" data-wow-delay="0.1s"
-                                     data-wow-duration="1.1s">
-                                <figure>
-                                    <div class="product_thumb">
-                                        <a href="single-product.html">
-                                            <img src="../assets/hutche/assets/img/product/product1.png"
-                                                 alt="">
-                                        </a>
-                                        <div class="label_product">
-                                            <span class="label_sale">Sale</span>
-                                        </div>
-                                    </div>
-                                    <figcaption class="product_content">
-                                        <h4>
+                        @foreach(var item in Model)
+                        {
+                            <div class="col-lg-3 col-md-4 col-sm-6">
+                                <article class="single_product wow fadeInUp" data-wow-delay="0.1s"
+                                         data-wow-duration="1.1s">
+                                    <figure>
+                                        <div class="product_thumb">
                                             <a href="single-product.html">
-                                                Tufted accent chair with wood legs,
-                                                Beige
+                                                <img src="@Url.Content("../Image_Furniture/" + item.Anh)"
+                                                     alt="">
                                             </a>
-                                        </h4>
-                                        <div class="price_box">
-                                            <span class="old_price">$399.99</span>
-                                            <span class="current_price">$129.99</span>
                                         </div>
-                                    </figcaption>
-                                </figure>
-                            </article>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <article class="single_product wow fadeInUp" data-wow-delay="0.2s"
-                                     data-wow-duration="1.2s">
-                                <figure>
-                                    <div class="product_thumb">
-                                        <a href="single-product.html">
-                                            <img src="../assets/hutche/assets/img/product/product2.png"
-                                                 alt="">
-                                        </a>
-                                    </div>
-                                    <figcaption class="product_content">
-                                        <h4>
-                                            <a href="single-product.html">Kendal Dark Teal Fabric Accent Chair</a>
-                                        </h4>
-                                        <div class="price_box">
-                                            <span class="current_price">$129.99</span>
-                                        </div>
-                                    </figcaption>
-                                </figure>
-                            </article>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <article class="single_product wow fadeInUp" data-wow-delay="0.3s"
-                                     data-wow-duration="1.3s">
-                                <figure>
-                                    <div class="product_thumb">
-                                        <a href="single-product.html">
-                                            <img src="../assets/hutche/assets/img/product/product3.png"
-                                                 alt="">
-                                        </a>
-                                        <div class="label_product">
-                                            <span class="label_hot">hot</span>
-                                        </div>
-                                    </div>
-                                    <figcaption class="product_content">
-                                        <h4>
-                                            <a href="single-product.html"> Contemporary Round Living Room Coffee</a>
-                                        </h4>
-                                        <div class="price_box">
-                                            <span class="current_price">$129.99</span>
-                                        </div>
-                                    </figcaption>
-                                </figure>
-                            </article>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <article class="single_product wow fadeInUp" data-wow-delay="0.4s"
-                                     data-wow-duration="1.4s">
-                                <figure>
-                                    <div class="product_thumb">
-                                        <a href="single-product.html">
-                                            <img src="../assets/hutche/assets/img/product/product4.png"
-                                                 alt="">
-                                        </a>
-                                    </div>
-                                    <figcaption class="product_content">
-                                        <h4>
-                                            <a href="single-product.html">Kendal Dark Teal Fabric Accent Chair</a>
-                                        </h4>
-                                        <div class="price_box">
-                                            <span class="old_price">$399.99</span>
-                                            <span class="current_price">$129.99</span>
-                                        </div>
-                                    </figcaption>
-                                </figure>
-                            </article>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <article class="single_product wow fadeInUp" data-wow-delay="0.1s"
-                                     data-wow-duration="1.1s">
-                                <figure>
-                                    <div class="product_thumb">
-                                        <a href="single-product.html">
-                                            <img src="../assets/hutche/assets/img/product/product5.png"
-                                                 alt="">
-                                        </a>
-                                    </div>
-                                    <figcaption class="product_content">
-                                        <h4>
-                                            <a href="single-product.html">
-                                                Tufted accent chair with wood legs,
-                                                Beige
-                                            </a>
-                                        </h4>
-                                        <div class="price_box">
-                                            <span class="current_price">$129.99</span>
-                                        </div>
-                                    </figcaption>
-                                </figure>
-                            </article>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <article class="single_product wow fadeInUp" data-wow-delay="0.2s"
-                                     data-wow-duration="1.2s">
-                                <figure>
-                                    <div class="product_thumb">
-                                        <a href="single-product.html">
-                                            <img src="../assets/hutche/assets/img/product/product6.png"
-                                                 alt="">
-                                        </a>
-                                    </div>
-                                    <figcaption class="product_content">
-                                        <h4>
-                                            <a href="single-product.html">Kendal Dark Teal Fabric Accent Chair</a>
-                                        </h4>
-                                        <div class="price_box">
-                                            <span class="old_price">$399.99</span>
-                                            <span class="current_price">$129.99</span>
-                                        </div>
-                                    </figcaption>
-                                </figure>
-                            </article>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <article class="single_product wow fadeInUp" data-wow-delay="0.3s"
-                                     data-wow-duration="1.3s">
-                                <figure>
-                                    <div class="product_thumb">
-                                        <a href="single-product.html">
-                                            <img src="../assets/hutche/assets/img/product/product7.png"
-                                                 alt="">
-                                        </a>
-                                    </div>
-                                    <figcaption class="product_content">
-                                        <h4>
-                                            <a href="single-product.html">Kendal Dark Teal Fabric Accent Chair</a>
-                                        </h4>
-                                        <div class="price_box">
-                                            <span class="current_price">$129.99</span>
-                                        </div>
-                                    </figcaption>
-                                </figure>
-                            </article>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <article class="single_product wow fadeInUp" data-wow-delay="0.4s"
-                                     data-wow-duration="1.4s">
-                                <figure>
-                                    <div class="product_thumb">
-                                        <a href="single-product.html">
-                                            <img src="../assets/hutche/assets/img/product/product8.png"
-                                                 alt="">
-                                        </a>
-                                    </div>
-                                    <figcaption class="product_content">
-                                        <h4>
-                                            <a href="single-product.html">
-                                                Tufted accent chair with wood legs,
-                                                Beige
-                                            </a>
-                                        </h4>
-                                        <div class="price_box">
-                                            <span class="old_price">$399.99</span>
-                                            <span class="current_price">$129.99</span>
-                                        </div>
-                                    </figcaption>
-                                </figure>
-                            </article>
+                                        <figcaption class="product_content">
+                                            <h4>
+                                                <a asp-controller="Main" asp-action="Detail" asp-route-maNoiThat="@item.MaNoiThat">
+                                                    @item.TenNoiThat
+                                                </a>
+                                            </h4>
+                                            <div class="price_box">
+                                                <span class="current_price">@item.DonGiaBan vnd</span>
+                                            </div>
+                                        </figcaption>
+                                    </figure>
+                                </article>
+                            </div>
+                        }
+                        <div class="loding_bar">
+                            <ul class="d-flex justify-content-center">
+                                @Html.PagedListPager(Model, page=>Url.Action("Index", new {page = page}))
+                            </ul>
                         </div>
                     </div>
                 </div>

@@ -3,15 +3,15 @@
     ViewData["Title"] = "Detail";
     Layout = "~/Views/Shared/_LayoutBeFurniture.cshtml";
 }
-
+@model BTLW.Models.DmnoiThat
 <div class="breadcrumbs_area">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="breadcrumb_content text-center">
-                    <h2>Leisure Chair Restaurant Back Sofa Office</h2>
+                    <h2>@Model.TenNoiThat</h2>
                     <ul class="d-flex justify-content-center">
-                        <li><a asp-controller="Main" asp-action="Home2">Home</a></li>
+                        <li><a asp-controller="Main" asp-action="Index">Home</a></li>
                         <li>></li>
                         <li><a asp-controller="Main" asp-action="Detail">Detail Product</a></li>
                     </ul>
@@ -29,34 +29,17 @@
                 <div class="product_gallery_inner d-flex">
                     <div class="product_gallery_list">
                         <div class="product_gallery_thumb">
-                            <a href="#"><img src="../Image_Furniture/table_jazz_ (1).jpg" alt=""></a>
+                            <a href="#"><img src="@Url.Content("../Image_Furniture/" + Model.Anh)" alt=""></a>
                         </div>
                     </div>
-                    <div class="product_gallery_list">
-                        <div class="product_gallery_thumb">
-                            <a href="#"><img src="../Image_Furniture/table_jazz_ (2).jpg" alt=""></a>
+                    @foreach(var image in ViewBag.anh)
+                    {
+                        <div class="product_gallery_list">
+                            <div class="product_gallery_thumb">
+                                <a href="#"><img src="@Url.Content("../Image_Furniture/" + image.TenFileAnh)" alt=""></a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="product_gallery_list">
-                        <div class="product_gallery_thumb">
-                            <a href="#"><img src="../Image_Furniture/table_jazz_ (3).jpg" alt=""></a>
-                        </div>
-                    </div>
-                    <div class="product_gallery_list">
-                        <div class="product_gallery_thumb">
-                            <a href="#"><img src="../Image_Furniture/table_jazz_ (4).jpg" alt=""></a>
-                        </div>
-                    </div>
-                    <div class="product_gallery_list">
-                        <div class="product_gallery_thumb">
-                            <a href="#"><img src="../Image_Furniture/table_jazz_ (5).jpg" alt=""></a>
-                        </div>
-                    </div>
-                    <div class="product_gallery_list">
-                        <div class="product_gallery_thumb">
-                            <a href="#"><img src="../Image_Furniture/table_jazz_ (6).jpg" alt=""></a>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>
@@ -86,10 +69,10 @@
                             </div>
                         </div>
                         <div class="product_details_title">
-                            <h3>Leisure Chair Restaurant Back Sofa Office</h3>
+                            <h3>@Model.TenNoiThat</h3>
                         </div>
                         <div class="product_price_box">
-                            <span class="current_price">£70.00</span>
+                            <span class="current_price">@Model.DonGiaBan vnd</span>
                         </div>
                         <div class="product_desc">
                             <p>In elit risus, volutpat sed vestibulum sit amet, bibendum in lorem. Etiam aliquet convallis nibh at tempus. Proin gravida tincidunt egestas. Curabitur porta nibh ac enim semper, vitae pretium ante sollicitudin. </p>

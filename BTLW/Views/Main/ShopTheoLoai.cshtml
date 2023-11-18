@@ -1,10 +1,10 @@
-﻿
+﻿@using X.PagedList.Mvc.Core;
+@model X.PagedList.PagedList<DmnoiThat>
 @{
-    ViewData["Title"] = "Shop";
+    ViewData["Title"] = "ShopTheoLoai";
     Layout = "~/Views/Shared/_LayoutBeFurniture.cshtml";
 }
-@using X.PagedList.Mvc.Core;
-@model X.PagedList.PagedList<DmnoiThat>
+
 <!--mini cart-->
 <div class="mini_cart">
     <div class="cart_gallery">
@@ -176,7 +176,7 @@
                         </div>
                         <div class="shop_gallery">
                             <div class="row">
-                                @foreach(var item in Model)
+                                @foreach (var item in Model)
                                 {
                                     <div class="col-lg-4 col-md-4 col-sm-6">
                                         <article class="single_product">
@@ -208,4 +208,3 @@
     </div>
 </div>
 <!-- shop page section end -->
-
