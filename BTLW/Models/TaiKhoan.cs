@@ -11,7 +11,5 @@ public partial class TaiKhoan
 
     public string? MatKhau { get; set; }
 
-    public string? MaNv { get; set; }
-
-    public virtual NhanVien? MaNvNavigation { get; set; }
+    public bool? LoaiTk { get; set; }
 }

@@ -1,0 +1,61 @@
+﻿@model BTLW.Models.DonDatHang
+
+@{
+    ViewData["Title"] = "ThemDDH";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Thêm đơn đặt hàng</h1>
+
+<p>@TempData["Message"]</p>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ThemDDH">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Số đơn đặt hàng</label>
+                <input asp-for="SoDdh" class="form-control" />
+                <span asp-validation-for="SoDdh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Mã nhân viên</label>
+                <select asp-for="MaNv" class ="form-control" asp-items="ViewBag.MaNv"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Mã khách hàng</label>
+                <select asp-for="MaKhach" class ="form-control" asp-items="ViewBag.MaKhach"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Ngày đặt</label>
+                <input asp-for="NgayDat" class="form-control" />
+                <span asp-validation-for="NgayDat" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Ngày giao</label>
+                <input asp-for="NgayGiao" class="form-control" />
+                <span asp-validation-for="NgayGiao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Tiền đặt cọc</label>
+                <input asp-for="DatCoc" class="form-control" />
+                <span asp-validation-for="DatCoc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Thuế</label>
+                <input asp-for="Thue" class="form-control" />
+                <span asp-validation-for="Thue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Tổng tiền</label>
+                <input asp-for="TongTien" class="form-control" />
+                <span asp-validation-for="TongTien" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Tạo" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+

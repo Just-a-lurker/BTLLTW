@@ -1,0 +1,81 @@
+﻿@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<DonDatHang>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "DDH";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Đơn đặt hàng</h1>
+
+<input type="button" value="Thêm" onclick="location.href='@Url.Action("ThemDDH", "Admin")'" />
+<table class="table" id="table1">
+    <thead>
+        <tr>
+            <th>
+                Số đơn đặt hàng
+            </th>
+            <th>
+                Mã nhân viên
+            </th>
+            <th>
+                Mã khách
+            </th>
+            <th>
+                Ngày đặt
+            </th>
+            <th>
+                Ngày giao
+            </th>
+            <th>
+                Tiền đặt cọc
+            </th>
+            <th>
+                Thuế
+            </th>
+            <th>
+                Tổng tiền
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoDdh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaNv)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaKhach)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayDat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayGiao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatCoc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Thue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TongTien)
+            </td>
+            <td>
+                    <a asp-action="SuaDDH" asp-route-soDDH="@item.SoDdh">Sửa</a> |
+                    <a asp-action="CTDDH" asp-route-soDDH="@item.SoDdh">Chi tiết</a> |
+                    <a asp-action="XoaDDH" asp-route-soDDH="@item.SoDdh">Xóa</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<div class="product__pagination">
+    @Html.PagedListPager(Model, page =>Url.Action("DDH", new{page = page}))
+</div>

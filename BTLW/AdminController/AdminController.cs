@@ -9,6 +9,7 @@ namespace BTLW.AdminController
 	public class AdminController : Controller
 	{
 		Lttqnhom6Context db = new Lttqnhom6Context();
+
 		public IActionResult Index()
 		{
 			return View();
@@ -40,7 +41,7 @@ namespace BTLW.AdminController
             var checkMa = db.HoaDonNhaps.Where(x => x.SoHdn == hoaDonNhap.SoHdn).ToList();
             if (checkMa.Count() > 0)
             {
-                TempData["Message"] = "Khong them duoc vi trung ma hd";
+                TempData["Message"] = "Không thêm được vì trùng số hóa đơn nhập";
                 return RedirectToAction("ThemHDN", "Admin");
             }
             else
@@ -103,7 +104,7 @@ namespace BTLW.AdminController
         [HttpGet]
         public IActionResult ThemCTHDN()
         {
-            ViewBag.MaNoithat = new SelectList(db.DmnoiThats.ToList(), "MaNoiThat", "TenNoiThat");
+            ViewBag.MaNoithat = new SelectList(db.DmnoiThats.ToList(), "MaNoiThat", "MaNoiThat");
             ViewBag.SoHdn = new SelectList(db.HoaDonNhaps.ToList(), "SoHdn", "SoHdn");
             return View();
         }
@@ -116,7 +117,7 @@ namespace BTLW.AdminController
             var checkMa = db.ChiTietHdns.Where(x => x.SoHdn == chiTietHdn.SoHdn && x.MaNoithat == chiTietHdn.MaNoithat).ToList();
             if (checkMa.Count() > 0)
             {
-                TempData["Message"] = "Khong them duoc vi trung ma HD va ma noi that";
+                TempData["Message"] = "Không thêm được vì trùng số hóa đơn nhập và mã nội thất";
                 return RedirectToAction("ThemCTHDN", "Admin");
             }
             else
@@ -152,6 +153,94 @@ namespace BTLW.AdminController
             db.Remove(db.ChiTietHdns.Find(maNT, soHDN));
             db.SaveChanges();
             return RedirectToAction("CTHDN", new { soHDN = soHDN });
+        }
+
+
+        [Route("DDH")]
+        public IActionResult DDH(int? page)
+        {
+            int pageSize = 10;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+            var lstHDN = db.DonDatHangs.OrderBy(n => n.SoDdh);
+            PagedList<DonDatHang> lst = new PagedList<DonDatHang>(lstHDN, pageNumber, pageSize);
+            return View(lst);
+        }
+
+        [Route("ThemDDH")]
+        [HttpGet]
+        public IActionResult ThemDDH()
+        {
+            ViewBag.MaNv = new SelectList(db.NhanViens.ToList(), "MaNv", "TenNv");
+            ViewBag.MaKhach = new SelectList(db.KhachHangs.ToList(), "MaKhach", "TenKhach");
+            return View();
+        }
+        [Route("ThemDDH")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ThemDDH(DonDatHang donDatHang)
+        {
+            TempData["Message"] = "";
+            var checkMa = db.DonDatHangs.Where(x => x.SoDdh == donDatHang.SoDdh).ToList();
+            if (checkMa.Count() > 0)
+            {
+                TempData["Message"] = "Không thêm được vì trùng số hóa đơn đặt hàng";
+                return RedirectToAction("ThemDDH", "Admin");
+            }
+            else
+            {
+                db.DonDatHangs.Add(donDatHang);
+                db.SaveChanges();
+                return RedirectToAction("DDH");
+            }
+        }
+
+        [Route("SuaDDH")]
+        [HttpGet]
+        public IActionResult SuaDDH(string soDDH)
+        {
+            ViewBag.MaNv = new SelectList(db.NhanViens.ToList(), "MaNv", "TenNv");
+            ViewBag.MaKhach = new SelectList(db.KhachHangs.ToList(), "MaKhach", "TenKhach");
+            ViewBag.soDDH = soDDH;
+            var DK = db.DonDatHangs.Find(soDDH);
+            return View(DK);
+        }
+        [Route("SuaDDH")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SuaDDH(DonDatHang donDatHang)
+        {
+            db.Update(donDatHang);
+            db.SaveChanges();
+            return RedirectToAction("DDH");
+        }
+
+        [Route("XoaDDH")]
+        [HttpGet]
+        public IActionResult XoaDDH(string soDDH)
+        {
+            TempData["Message1"] = "";
+            var checkMa = db.ChiTietHddhs.Where(x => x.SoDdh == soDDH).ToList();
+            if (checkMa.Count() > 0)
+            {
+                TempData["Message1"] = "Xóa hết chi tiết ĐĐH trước.";
+                return RedirectToAction("CTDDH", "Admin", new
+                {
+                    soDDH = soDDH
+                });
+            }
+            db.Remove(db.DonDatHangs.Find(soDDH));
+            db.SaveChanges();
+            return RedirectToAction("DDH", "Admin");
+        }
+
+        public IActionResult CTDDH(string soDDH, int? page)
+        {
+            ViewBag.soDDH = soDDH;
+            int pageSize = 10;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+            var lstCTDDH = db.ChiTietHddhs.Where(x => x.SoDdh.Equals(soDDH)).OrderBy(n => n.SoDdh);
+            PagedList<ChiTietHddh> lst = new PagedList<ChiTietHddh>(lstCTDDH, pageNumber, pageSize);
+            return View(lst);
         }
     }
 }

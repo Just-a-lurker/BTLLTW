@@ -16,33 +16,30 @@
             <input type="hidden" asp-for="MaNoithat" />
             <input type="hidden" asp-for="SoHdn" />
             <div class="form-group">
-                <label asp-for="SoLuong" class="control-label"></label>
+                <label class="control-label">Số lượng</label>
                 <input asp-for="SoLuong" class="form-control" />
                 <span asp-validation-for="SoLuong" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DonGia" class="control-label"></label>
+                <label class="control-label">Đơn giá</label>
                 <input asp-for="DonGia" class="form-control" />
                 <span asp-validation-for="DonGia" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="GiamGia" class="control-label"></label>
+                <label class="control-label">Giảm giá</label>
                 <input asp-for="GiamGia" class="form-control" />
                 <span asp-validation-for="GiamGia" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ThanhTien" class="control-label"></label>
+                <label class="control-label">Thành tiền</label>
                 <input asp-for="ThanhTien" class="form-control" />
                 <span asp-validation-for="ThanhTien" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Lưu" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 

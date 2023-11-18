@@ -1,32 +1,26 @@
-﻿@using X.PagedList.Mvc.Core;
-@model X.PagedList.IPagedList<ChiTietHdn>
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@model IEnumerable<BTLW.Models.ChiTietHddh>
 
 @{
-    ViewData["Title"] = "CTHDN";
+    ViewData["Title"] = "CTDDH";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Chi tiết @ViewBag.SoHDN </h1>
+<h1>Chi tiết @ViewBag.soDDH </h1>
 
 <p>@TempData["Message1"]</p>
 
-<input type="button" value="Thêm" onclick="location.href='@Url.Action("ThemCTHDN", "Admin")'" />
-
+<input type="button" value="Thêm" onclick="location.href='@Url.Action("ThemCTDDH", "Admin")'" />
 <table class="table" id="table1">
     <thead>
         <tr>
             <th>
-                Tên nội thất
+                Mã nội thất
             </th>
             <th>
-                Số HĐN
+                Số ĐĐH
             </th>
             <th>
-                Số lượng
-            </th>
-            <th>
-                Đơn giá
+                Só lượng
             </th>
             <th>
                 Giảm giá
@@ -44,13 +38,10 @@
                     @Html.DisplayFor(modelItem => item.MaNoithat)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.SoHdn)
+                    @Html.DisplayFor(modelItem => item.SoDdh)
                 </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SoLuong)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DonGia)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.GiamGia)
@@ -58,9 +49,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.ThanhTien)
             </td>
+
             <td>
-                    <a asp-action="SuaCTHDN" asp-route-soHDN="@item.SoHdn" asp-route-maNT="@item.MaNoithat">Sửa</a> |
-                    <a asp-action="XoaCTHDN" asp-route-soHDN="@item.SoHdn" asp-route-maNT="@item.MaNoithat">Xóa</a>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
 }
