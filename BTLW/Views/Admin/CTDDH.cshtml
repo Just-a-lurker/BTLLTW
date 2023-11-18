@@ -10,6 +10,9 @@
 <p>@TempData["Message1"]</p>
 
 <input type="button" value="Thêm" onclick="location.href='@Url.Action("ThemCTDDH", "Admin")'" />
+
+
+
 <table class="table" id="table1">
     <thead>
         <tr>
@@ -51,11 +54,14 @@
             </td>
 
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    <a asp-action="SuaCTDDH" asp-route-soDDH="@item.SoDdh" asp-route-maNT="@item.MaNoithat">Sửa</a> |
+                    <a asp-action="XoaCTDDH" asp-route-soDDH="@item.SoDdh" asp-route-maNT="@item.MaNoithat">Xóa</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+<div>
+    <a asp-action="DDH">Quay lại</a>
+</div>

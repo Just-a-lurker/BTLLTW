@@ -97,6 +97,7 @@ namespace BTLW.AdminController
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
             var lstCTHDN = db.ChiTietHdns.Where(x => x.SoHdn.Equals(soHDN)).OrderBy(n => n.SoHdn);
             PagedList<ChiTietHdn> lst = new PagedList<ChiTietHdn>(lstCTHDN, pageNumber, pageSize);
+            TempData["soN"] = soHDN;
             return View(lst);
         }
 
@@ -105,7 +106,7 @@ namespace BTLW.AdminController
         public IActionResult ThemCTHDN()
         {
             ViewBag.MaNoithat = new SelectList(db.DmnoiThats.ToList(), "MaNoiThat", "MaNoiThat");
-            ViewBag.SoHdn = new SelectList(db.HoaDonNhaps.ToList(), "SoHdn", "SoHdn");
+            ViewBag.SoHdn = new SelectList(db.HoaDonNhaps.ToList(), "SoHdn", "SoHdn", TempData["soN"]);
             return View();
         }
         [Route("ThemCTHDN")]
@@ -240,7 +241,63 @@ namespace BTLW.AdminController
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
             var lstCTDDH = db.ChiTietHddhs.Where(x => x.SoDdh.Equals(soDDH)).OrderBy(n => n.SoDdh);
             PagedList<ChiTietHddh> lst = new PagedList<ChiTietHddh>(lstCTDDH, pageNumber, pageSize);
+            TempData["soD"] = soDDH;
             return View(lst);
+        }
+
+        [Route("ThemCTDDH")]
+        [HttpGet]
+        public IActionResult ThemCTDDH()
+        {
+            ViewBag.MaNoithat = new SelectList(db.DmnoiThats.ToList(), "MaNoiThat", "MaNoiThat");
+            ViewBag.SoDdh = new SelectList(db.DonDatHangs.ToList(), "SoDdh", "SoDdh", TempData["soD"]);
+            return View();
+        }
+        [Route("ThemCTDDH")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ThemCTDDH(ChiTietHddh chiTietHddh)
+        {
+            TempData["Message"] = "";
+            var checkMa = db.ChiTietHddhs.Where(x => x.SoDdh == chiTietHddh.SoDdh && x.MaNoithat == chiTietHddh.MaNoithat).ToList();
+            if (checkMa.Count() > 0)
+            {
+                TempData["Message"] = "Không thêm được vì trùng số hóa đơn đặt hàng và mã nội thất";
+                return RedirectToAction("ThemCTDDH", "Admin");
+            }
+            else
+            {
+                string temp = chiTietHddh.SoDdh;
+                db.ChiTietHddhs.Add(chiTietHddh);
+                db.SaveChanges();
+                return RedirectToAction("CTDDH", new { soDDH = temp });
+            }
+        }
+
+        [Route("SuaCTDDH")]
+        [HttpGet]
+        public IActionResult SuaCTDDH(string soDDH, string maNT)
+        {
+            var DK = db.ChiTietHddhs.Find(maNT, soDDH);
+            return View(DK);
+        }
+        [Route("SuaCTDDH")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SuaCTDDH(ChiTietHddh chiTietHddh)
+        {
+            db.Update(chiTietHddh);
+            db.SaveChanges();
+            return RedirectToAction("CTDDH", new { soDDH = chiTietHddh.SoDdh });
+        }
+
+        [Route("XoaCTDDH")]
+        [HttpGet]
+        public IActionResult XoaCTDDH(string soDDH, string maNT)
+        {
+            db.Remove(db.ChiTietHddhs.Find(maNT, soDDH));
+            db.SaveChanges();
+            return RedirectToAction("CTDDH", new { soDDH = soDDH });
         }
     }
 }
