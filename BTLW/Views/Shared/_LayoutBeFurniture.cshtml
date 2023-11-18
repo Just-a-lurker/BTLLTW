@@ -112,7 +112,9 @@
     <!--offcanvas menu area end-->
     <!--header area start-->
     @await Html.PartialAsync("PartialHeaderBe")
-    @RenderBody()
+    <div id="displayProducts">
+        @RenderBody()
+    </div>
     <!-- footer section start -->
     @await Html.PartialAsync("PartialFooterBe")
     <!-- footer section end -->

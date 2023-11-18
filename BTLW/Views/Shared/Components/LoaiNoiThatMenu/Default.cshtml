@@ -7,8 +7,29 @@
         <ul>
             @foreach(var item in Model)
             {
+                var getUrl = "https://localhost:7005/api/productapi/" + item.Maloai;
+                <li><a style="cursor: pointer" onclick="showProductByCategory ('@getUrl')">@item.Tenloai</a></li>
                 <li><a asp-controller="Main" asp-action="ShopTheoLoai" asp-route-maLoai="@item.Maloai">@item.Tenloai</a></li>
             }
         </ul>
     </div>
 </div>
+<script>
+    function showProductByCategory(getUrl) {
+        var str = '';
+        $.ajax({
+            type: 'GET',
+            url: getUrl,
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, val) {
+                    str += '<p>' + val.TenNoiThat + '</p>'
+                });
+                $('#displayProducts').html(str);
+            },
+            Error: function (xhr) {
+                alert(xhr.responseText)
+            }
+        });
+    }
+</script>
