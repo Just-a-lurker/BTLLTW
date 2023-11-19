@@ -9,7 +9,7 @@
             {
                 var getUrl = "https://localhost:7005/api/productapi/" + item.Maloai;
                 <li><a style="cursor: pointer" onclick="showProductByCategory ('@getUrl')">@item.Tenloai</a></li>
-                <li><a asp-controller="Main" asp-action="ShopTheoLoai" asp-route-maLoai="@item.Maloai">@item.Tenloai</a></li>
+                @* <li><a asp-controller="Main" asp-action="ShopTheoLoai" asp-route-maLoai="@item.Maloai">@item.Tenloai</a></li> *@
             }
         </ul>
     </div>
