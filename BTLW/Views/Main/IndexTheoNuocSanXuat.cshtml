@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "IndexTheoNuocSanXuat";
     Layout = "~/Views/Shared/_LayoutBeFurniture.cshtml";
 }
 @using X.PagedList.Mvc.Core;
@@ -124,12 +124,14 @@
 <!-- product section start -->
 <div class="product_section mb-50">
     <div class="container">
-        @await Component.InvokeAsync("NuocSanXuatMenu")
+        <div class="product_tab_button">
+            @await Component.InvokeAsync("NuocSanXuatMenu")
+        </div>
         <div class="tab-content product_container">
             <div class="tab-pane fade show active" id="products" role="tabpanel">
                 <div class="product_gallery">
                     <div class="row">
-                        @foreach(var item in Model)
+                        @foreach (var item in Model)
                         {
                             <div class="col-lg-3 col-md-4 col-sm-6">
                                 <article class="single_product wow fadeInUp" data-wow-delay="0.1s"
@@ -155,11 +157,6 @@
                                 </article>
                             </div>
                         }
-                        <div class="loding_bar">
-                            <ul class="d-flex justify-content-center">
-                                @Html.PagedListPager(Model, page=>Url.Action("Index", new {page = page}))
-                            </ul>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -837,4 +834,3 @@
     </div>
 </section>
 <!-- blog section end -->
-
