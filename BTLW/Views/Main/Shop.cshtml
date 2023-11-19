@@ -5,76 +5,6 @@
 }
 @using X.PagedList.Mvc.Core;
 @model X.PagedList.PagedList<DmnoiThat>
-<!--mini cart-->
-<div class="mini_cart">
-    <div class="cart_gallery">
-        <div class="cart_close">
-            <div class="cart_text">
-                <h3>cart</h3>
-            </div>
-            <div class="mini_cart_close">
-                <a href="javascript:void(0)"><i class="ion-android-close"></i></a>
-            </div>
-        </div>
-        <div class="cart_item">
-            <div class="cart_img">
-                <a href="#"><img src="../assets/hutche/assets/img/product/small-product1.png" alt=""></a>
-            </div>
-            <div class="cart_info">
-                <a href="#">Primis In Faucibus</a>
-                <p>1 x <span> $65.00 </span></p>
-            </div>
-            <div class="cart_remove">
-                <a href="#"><i class="icon-close icons"></i></a>
-            </div>
-        </div>
-        <div class="cart_item">
-            <div class="cart_img">
-                <a href="#"><img src="../assets/hutche/assets/img/product/small-product2.png" alt=""></a>
-            </div>
-            <div class="cart_info">
-                <a href="#">Letraset Sheets</a>
-                <p>1 x <span> $60.00 </span></p>
-            </div>
-            <div class="cart_remove">
-                <a href="#"><i class="icon-close icons"></i></a>
-            </div>
-        </div>
-    </div>
-    <div class="mini_cart_table">
-        <div class="cart_table_border">
-            <div class="cart_total">
-                <span>Sub total:</span>
-                <span class="price">$125.00</span>
-            </div>
-            <div class="cart_total mt-10">
-                <span>total:</span>
-                <span class="price">$125.00</span>
-            </div>
-        </div>
-    </div>
-    <div class="mini_cart_footer">
-        <div class="cart_button">
-            <a href="#"><i class="fa fa-shopping-cart"></i> View cart</a>
-        </div>
-        <div class="cart_button">
-            <a href="#"><i class="fa fa-sign-in"></i> Checkout</a>
-        </div>
-    </div>
-</div>
-<!--mini cart end-->
-<!-- page search box -->
-<div class="page_search_box">
-    <div class="search_close">
-        <i class="ion-close-round"></i>
-    </div>
-    <form class="border-bottom" action="#">
-        <input class="border-0" placeholder="Search products..." type="text">
-        <button type="submit"><i class="icofont-search"></i></button>
-    </form>
-</div>
-<!--header area end-->
-
 <div class="breadcrumbs_area">
     <div class="container">
         <div class="row">
@@ -91,7 +21,6 @@
         </div>
     </div>
 </div>
-
 <!-- shop page section satrt -->
 <div class="shop_page_section">
     <div class="container">
@@ -100,52 +29,6 @@
                 <div class="shop_page_inner d-flex ">
                     <div class="shop_sidebar_widget">
                         @await Component.InvokeAsync("LoaiNoiThatMenu")
-                        <div class="shop_widget_list">
-                            <div class="shop_widget_title">
-                                <h3>by prices</h3>
-                            </div>
-                            <div class="widget_proce_filter">
-                                <form action="#">
-                                    <input type="text" id="amount">
-                                    <div id="slider-range"></div>
-                                    <button type="submit">Filter Price</button>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="shop_widget_list">
-                            <div class="shop_widget_title">
-                                <h3>by colors</h3>
-                            </div>
-                            <div class="widget_color">
-                                <ul>
-                                    <li><a class="color1" href="javascript:void(0)"></a></li>
-                                    <li><a class="color2" href="javascript:void(0)"></a></li>
-                                    <li><a class="color3" href="javascript:void(0)"></a></li>
-                                    <li><a class="color4" href="javascript:void(0)"></a></li>
-                                    <li><a class="color5" href="javascript:void(0)"></a></li>
-                                    <li><a class="color6" href="javascript:void(0)"></a></li>
-                                    <li><a class="color7" href="javascript:void(0)"></a></li>
-                                </ul>
-                            </div>
-                            <div class="widget_color_btn">
-                                <a href="#">FILTER COLOR</a>
-                            </div>
-                        </div>
-                        <div class="shop_widget_list">
-                            <div class="shop_widget_title">
-                                <h3>Tags cloud</h3>
-                            </div>
-                            <div class="widget_tags">
-                                <ul>
-                                    <li><a href="#">FURNITURE</a></li>
-                                    <li><a href="#">DECOR</a></li>
-                                    <li><a href="#">INTERIOR</a></li>
-                                    <li><a href="#">Bed room</a></li>
-                                    <li><a href="#">Plants</a></li>
-                                    <li><a href="#">bath room</a></li>
-                                </ul>
-                            </div>
-                        </div>
                         <div class="shop_widget_thumb">
                             <img src="../assets/hutche/assets/img/others/shop-sidebar.png" alt="">
                         </div>
@@ -182,7 +65,7 @@
                                         <article class="single_product">
                                             <figure>
                                                 <div class="product_thumb">
-                                                    <a href="single-product.html"><img src="@Url.Content("../Image_Furniture/" + item.Anh)" alt=""></a>
+                                                    <a asp-controller="Main" asp-action="Detail" asp-route-maNoiThat="@item.MaNoiThat"><img src="@Url.Content("../Image_Furniture/" + item.Anh)" alt=""></a>
                                                 </div>
                                                 <figcaption class="product_content">
                                                     <h4><a asp-controller="Main" asp-action="Detail" asp-route-maNoiThat="@item.MaNoiThat">@item.TenNoiThat</a></h4>

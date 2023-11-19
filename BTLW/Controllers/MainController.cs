@@ -11,7 +11,7 @@ namespace BTLW.Controllers
 
 		public IActionResult Shop(int? page)
 		{
-			int pageSize = 12;
+			int pageSize = 9;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
             var noiThat = db.DmnoiThats.AsNoTracking().OrderBy(x => x.TenNoiThat);
             PagedList<DmnoiThat> lstNoiThat = new PagedList<DmnoiThat>(noiThat, pageNumber, pageSize);
@@ -20,7 +20,7 @@ namespace BTLW.Controllers
 
 		public IActionResult ShopTheoLoai(int? page, string maLoai)
 		{
-			int pageSize = 12;
+			int pageSize = 9;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
             var noiThat = db.DmnoiThats.Where(x=>x.Maloai==maLoai);
             PagedList<DmnoiThat> lstNoiThat = new PagedList<DmnoiThat>(noiThat, pageNumber, pageSize);
@@ -41,6 +41,15 @@ namespace BTLW.Controllers
 			int pageNumber = page == null || page < 0 ? 1 : page.Value;
 			var noiThat = db.DmnoiThats.AsNoTracking().OrderBy(x => x.TenNoiThat);
 			PagedList<DmnoiThat> lstNoiThat = new PagedList<DmnoiThat>(noiThat, pageNumber, pageSize);
+            return View(lstNoiThat);
+		}
+
+		public IActionResult IndexTheoNuocSanXuat(int? page, string maNuocSx) 
+		{
+            int pageSize = 8;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+            var noiThat = db.DmnoiThats.Where(x => x.Manuocsx==maNuocSx);
+            PagedList<DmnoiThat> lstNoiThat = new PagedList<DmnoiThat>(noiThat, pageNumber, pageSize);
             return View(lstNoiThat);
 		}
 

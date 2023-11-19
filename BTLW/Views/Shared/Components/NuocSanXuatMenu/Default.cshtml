@@ -1,0 +1,11 @@
+﻿@model IEnumerable<NuocSx>
+<div class="product_tab_button">
+    <ul class="nav justify-content-center">
+        @foreach (var item in Model)
+        {
+            <li>
+                <a asp-controller="Main" asp-action="IndexTheoNuocSanXuat" asp-route-maNuocSx="@item.Manuocsx">@item.Tennuocsx</a>
+            </li>
+        }
+    </ul>
+</div>
