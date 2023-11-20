@@ -1,4 +1,6 @@
-﻿@model IEnumerable<BTLW.Models.TaiKhoan>
+﻿@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<TaiKhoan>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     ViewData["Title"] = "Register";
@@ -10,17 +12,17 @@
 <p>
     <a asp-action="ThemTaiKhoan">Create New</a>
 </p>
-<table class="table">
+<table class="table" id="table1">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.TenTk)
+                Tên TK
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MatKhau)
+                Mật khẩu
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LoaiTk)
+                Loại TK
             </th>
             <th></th>
         </tr>
@@ -53,3 +55,7 @@
 }
     </tbody>
 </table>
+@Html.PagedListPager(Model,page=>Url.Action("Register",new{page=page}),new
+X.PagedList.Web.Common.PagedListRenderOptions(){
+    LiElementClasses=new List<String>{"page-iten"},PageClasses=new List<String>{"page-link"}
+})
