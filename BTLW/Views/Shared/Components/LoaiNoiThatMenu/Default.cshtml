@@ -7,8 +7,54 @@
         <ul>
             @foreach(var item in Model)
             {
-                <li><a asp-controller="Main" asp-action="ShopTheoLoai" asp-route-maLoai="@item.Maloai">@item.Tenloai</a></li>
+                var getUrl = "https://localhost:7005/api/productapi/" + item.Maloai;
+                <li><a style="cursor: pointer" onclick="showProductByCategory ('@getUrl')">@item.Tenloai</a></li>
+                @* <li><a asp-controller="Main" asp-action="ShopTheoLoai" asp-route-maLoai="@item.Maloai">@item.Tenloai</a></li> *@
             }
         </ul>
     </div>
 </div>
+<script>
+    function showProductByCategory(getUrl) {
+        var str = '';
+        $.ajax({
+            type: 'GET',
+            url: getUrl,
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, val) {
+                    str += '<div class="col-lg-4 col-md-4 col-sm-6">';
+                    str += '<article class="single_product">';
+                    str += '<figure>';
+                    str += '<div class="product_thumb">';
+                    str += '<a href =\"/Main/Detail?maNoiThat=';
+                    str += val.maNoiThat; 
+                    var linkImage = "../Image_Furniture/" + val.anh;
+                    str += '\"><img src=\"'; 
+                    str += linkImage; 
+                    str += '\" alt=""></a>';
+                    str += '</div>';
+                    str += '<figcaption class="product_content">';
+                    str += '<h4><a href =\"/Main/Detail?maNoiThat=';
+                    str += val.maNoiThat;
+                    str += '\">'; 
+                    str += val.tenNoiThat; 
+                    str += '</a></h4>';
+                    str += '<div class="price_box">';
+                    str += '<span class="current_price">'; 
+                    str += val.donGiaBan.toString(); 
+                    str += ' vnd</span>';
+                    str += '</div>';
+                    str += '</figcaption>';
+                    str += '</figure>';
+                    str += '</article>';
+                    str += '</div>';
+                });
+                $('#displayProducts').html(str);
+            },
+            Error: function (xhr) {
+                alert(xhr.responseText)
+            }
+        });
+    }
+</script>
