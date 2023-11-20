@@ -7,8 +7,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("Lttqnhom6Context");
-builder.Services.AddDbContext<Lttqnhom6Context>(x => x.UseSqlServer(connectionString));
 // Add services to the container.
 
 var connectingString = builder.Configuration.GetConnectionString("Lttqnhom6Context");

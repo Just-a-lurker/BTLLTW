@@ -37,7 +37,7 @@ namespace BTLW.Controllers
                     var b=db.TaiKhoans.Where(x=>x.TenTk.Equals(user.TenTk)&&x.LoaiTk==false).FirstOrDefault();
                     if (b != null)
                     {
-                        return RedirectToAction("home2", "main");
+                        return RedirectToAction("index", "main");
 
                     }
                     else
