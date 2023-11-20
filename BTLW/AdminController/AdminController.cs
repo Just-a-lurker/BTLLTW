@@ -35,6 +35,12 @@ namespace BTLW.AdminController
         [HttpGet]
         public IActionResult ThemTaiKhoan()
         {
+            ViewBag.Maloai = new SelectList(
+                            new List<SelectListItem>
+                            {
+                                new SelectListItem { Text = "True", Value = "True"},
+                                new SelectListItem {Text = "False", Value = "False"},
+                            }, "Value", "Text");
             return View();
         }
         [Route("ThemTaiKhoan")]
@@ -61,7 +67,12 @@ namespace BTLW.AdminController
         [HttpGet]
         public IActionResult SuaTaiKhoan(int mataikhoan)
         {
-           
+            ViewBag.Maloai = new SelectList(
+                 new List<SelectListItem>
+                 {
+                                new SelectListItem { Text = "True", Value = "True"},
+                                new SelectListItem {Text = "False", Value = "False"},
+                 }, "Value", "Text");
             ViewBag.manoithat = mataikhoan;
             var sp = db.TaiKhoans.Find(mataikhoan);
 
