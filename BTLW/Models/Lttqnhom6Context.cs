@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BTLW.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BTLW.Models;
@@ -56,7 +57,7 @@ public partial class Lttqnhom6Context : DbContext
     {
         modelBuilder.Entity<AnhNoiThat>(entity =>
         {
-            entity.HasKey(e => e.TenFileAnh).HasName("PK__AnhNoiTh__8E7F36210995D6BB");
+            entity.HasKey(e => e.TenFileAnh).HasName("PK__AnhNoiTh__8E7F3621D8FDFA3B");
 
             entity.ToTable("AnhNoiThat");
 
@@ -107,7 +108,7 @@ public partial class Lttqnhom6Context : DbContext
 
         modelBuilder.Entity<ChiTietHddh>(entity =>
         {
-            entity.HasKey(e => new { e.MaNoithat, e.SoDdh }).HasName("PK__ChiTietH__F1EA73BAB1DE7930");
+            entity.HasKey(e => new { e.MaNoithat, e.SoDdh }).HasName("PK__ChiTietH__F1EA73BA72ECFB97");
 
             entity.ToTable("ChiTietHDDH");
 
@@ -134,7 +135,7 @@ public partial class Lttqnhom6Context : DbContext
 
         modelBuilder.Entity<ChiTietHdn>(entity =>
         {
-            entity.HasKey(e => new { e.MaNoithat, e.SoHdn }).HasName("PK__ChiTietH__D1B8F7551F6A2A99");
+            entity.HasKey(e => new { e.MaNoithat, e.SoHdn }).HasName("PK__ChiTietH__D1B8F755660A729F");
 
             entity.ToTable("ChiTietHDN");
 
@@ -436,12 +437,12 @@ public partial class Lttqnhom6Context : DbContext
 
         modelBuilder.Entity<TaiKhoan>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("TaiKhoan");
+            entity.HasKey(e => e.MaTk).HasName("PK__TaiKhoan__272500706251BA43");
 
-            entity.Property(e => e.LoaiTk).HasColumnName("LoaiTK");
+            entity.ToTable("TaiKhoan");
+
             entity.Property(e => e.MaTk).HasColumnName("MaTK");
+            entity.Property(e => e.LoaiTk).HasColumnName("LoaiTK");
             entity.Property(e => e.MatKhau).HasMaxLength(50);
             entity.Property(e => e.TenTk)
                 .HasMaxLength(50)

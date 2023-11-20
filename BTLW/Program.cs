@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 var connectingString = builder.Configuration.GetConnectionString("Lttqnhom6Context");
 builder.Services.AddDbContext<Lttqnhom6Context>(x=>x.UseSqlServer(connectingString));
 builder.Services.AddScoped<ILoaiNoiThatRepository, LoaiNoiThatRepository>();
+builder.Services.AddScoped<INuocSanXuatRepository, NuocSanXuatRepository>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
