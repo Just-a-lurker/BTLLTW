@@ -51,13 +51,13 @@ public partial class Lttqnhom6Context : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=MSI\\SQLEXPRESS;Initial Catalog=Lttqnhom6;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-RHSS0AL;Initial Catalog=Lttqnhom6;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AnhNoiThat>(entity =>
         {
-            entity.HasKey(e => e.TenFileAnh).HasName("PK__AnhNoiTh__8E7F36210995D6BB");
+            entity.HasKey(e => e.TenFileAnh).HasName("PK__AnhNoiTh__8E7F3621D8FDFA3B");
 
             entity.ToTable("AnhNoiThat");
 
@@ -108,7 +108,7 @@ public partial class Lttqnhom6Context : DbContext
 
         modelBuilder.Entity<ChiTietHddh>(entity =>
         {
-            entity.HasKey(e => new { e.MaNoithat, e.SoDdh }).HasName("PK__ChiTietH__F1EA73BAB1DE7930");
+            entity.HasKey(e => new { e.MaNoithat, e.SoDdh }).HasName("PK__ChiTietH__F1EA73BA72ECFB97");
 
             entity.ToTable("ChiTietHDDH");
 
@@ -135,7 +135,7 @@ public partial class Lttqnhom6Context : DbContext
 
         modelBuilder.Entity<ChiTietHdn>(entity =>
         {
-            entity.HasKey(e => new { e.MaNoithat, e.SoHdn }).HasName("PK__ChiTietH__D1B8F7551F6A2A99");
+            entity.HasKey(e => new { e.MaNoithat, e.SoHdn }).HasName("PK__ChiTietH__D1B8F755660A729F");
 
             entity.ToTable("ChiTietHDN");
 
@@ -437,12 +437,12 @@ public partial class Lttqnhom6Context : DbContext
 
         modelBuilder.Entity<TaiKhoan>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("TaiKhoan");
+            entity.HasKey(e => e.MaTk).HasName("PK__TaiKhoan__272500706251BA43");
 
-            entity.Property(e => e.LoaiTk).HasColumnName("LoaiTK");
+            entity.ToTable("TaiKhoan");
+
             entity.Property(e => e.MaTk).HasColumnName("MaTK");
+            entity.Property(e => e.LoaiTk).HasColumnName("LoaiTK");
             entity.Property(e => e.MatKhau).HasMaxLength(50);
             entity.Property(e => e.TenTk)
                 .HasMaxLength(50)

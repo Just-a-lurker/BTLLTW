@@ -2,8 +2,10 @@
 using BTLW.Models;
 using BTLW.Models.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data.Entity;
+using BTLW.Models;
 using X.PagedList;
 
 namespace BTLW.AdminController
@@ -17,6 +19,43 @@ namespace BTLW.AdminController
 		{
 			return View();
 		}
+        [Route("DanhMucTaiKhoan")]
+        public IActionResult Register(int? page)
+        {
+            int pageSize = 8;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+
+            var lstsp = db.TaiKhoans.AsNoTracking().OrderBy(x => x.TenTk).ToList();
+            PagedList<TaiKhoan> a = new PagedList<TaiKhoan>(lstsp, pageNumber, pageSize);
+            return View(a);
+        }
+        [Route("ThemTaiKhoan")]
+        [HttpGet]
+        public IActionResult ThemTaiKhoan()
+        {
+            return View();
+        }
+        [Route("ThemTaiKhoan")]
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public IActionResult ThemTaiKhoan(TaiKhoan user)
+        {
+            /*empData["Message"] = "";*/
+            var dm = db.TaiKhoans.Where(x => x.TenTk.Equals(user.TenTk)).ToList();
+            if (dm.Count > 0)
+            {
+                //TempData["Message"] = "trung ma tK";
+                return RedirectToAction("ThemTaiKhoan", "Admin");
+            }
+            else
+            {
+                //TempData["Message"] = "Ok";
+                db.TaiKhoans.Add(user);
+                db.SaveChanges();
+                return RedirectToAction("Login", "Access");
+            }
+        }
+
         [Route("DanhMucSanPham")]
         public IActionResult DanhMucSanPham(int ?page)
         {
