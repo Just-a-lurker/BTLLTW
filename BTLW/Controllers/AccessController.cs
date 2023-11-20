@@ -1,6 +1,7 @@
 ﻿using BTLW.Models;
 using BTLW.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 using Microsoft.Win32;
 using System.Security.Cryptography;
 using System.Text;
@@ -42,6 +43,8 @@ namespace BTLW.Controllers
                     }
                     else
                     {
+                        TempData["Name"] = user.TenTk;
+                        ViewData["UserName"] = user.TenTk;
                         return RedirectToAction("index", "admin");
                         
                     }
