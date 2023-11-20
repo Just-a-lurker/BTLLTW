@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data.Entity;
 using X.PagedList;
+using Microsoft.AspNetCore.Hosting;
 
 namespace BTLW.AdminController
 {
@@ -12,8 +13,13 @@ namespace BTLW.AdminController
     public class AdminController : Controller
 	{ 
 		Lttqnhom6Context db = new Lttqnhom6Context();
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-		public IActionResult Index()
+        public AdminController(IWebHostEnvironment webHostEnvironment)
+        {
+            _webHostEnvironment = webHostEnvironment;
+        }
+        public IActionResult Index()
 		{
 			return View();
 		}
@@ -38,6 +44,27 @@ namespace BTLW.AdminController
             ViewBag.Manuocsx = new SelectList(db.NuocSxes.ToList(), "Manuocsx", "Tennuocsx");
             return View();
         }
+        /*[Route("ThemSanPhamMoi")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ThemSanPhamMoi(DmnoiThat dmnoiThat)
+        {
+            TempData["Message"] = "";
+            var dm=db.DmnoiThats.Where(x=>x.MaNoiThat.Equals(dmnoiThat.MaNoiThat)).ToList();
+            if(dm.Count > 0)
+            {
+                TempData["Message"] = "trung ma noi that";
+                return RedirectToAction("ThemMoiSanPham","Admin");   
+            }else
+            {
+                db.DmnoiThats.Add(dmnoiThat);
+                db.SaveChanges();
+                return RedirectToAction("DanhMucSanPham");
+            }
+           
+            
+            //return View(dmnoiThat);
+        }*/
         [Route("ThemSanPhamMoi")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -57,11 +84,11 @@ namespace BTLW.AdminController
 
                 if (anhFile != null && anhFile.Length > 0)
                 {
-                    byte[] imageData;
+                    var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "UploadedImages", anhFile.FileName);
 
-                    using (var binaryReader = new BinaryReader(anhFile.OpenReadStream()))
+                    using (var stream = new FileStream(imagePath, FileMode.Create))
                     {
-                        imageData = binaryReader.ReadBytes((int)anhFile.Length);
+                        anhFile.CopyTo(stream);
                     }
 
                     var anhNoiThat = new AnhNoiThat
@@ -109,7 +136,7 @@ namespace BTLW.AdminController
         public IActionResult XoaSanPham(string manoithat)
         {
             TempData["Message"] = "";
-            var ct=db.DmnoiThats.Where(x=>x.MaNoiThat== manoithat).ToList();
+            var ct=db.ChiTietHdns.Where(x=>x.MaNoithat== manoithat).ToList();
             if(ct.Count()>0)
             {
                 TempData["Message"] = manoithat + " cant delete";
