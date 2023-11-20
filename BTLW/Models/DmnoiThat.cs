@@ -27,7 +27,9 @@ public partial class DmnoiThat
 
     public string? Anh { get; set; }
 
-    public DateTime? ThoiGianBaoHanh { get; set; }
+    public int? ThoiGianBaoHanh { get; set; }
+
+    public virtual ICollection<AnhNoiThat> AnhNoiThats { get; set; } = new List<AnhNoiThat>();
 
     public virtual ICollection<ChiTietHddh> ChiTietHddhs { get; set; } = new List<ChiTietHddh>();
 

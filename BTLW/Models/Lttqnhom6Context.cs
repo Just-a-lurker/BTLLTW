@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using BTLW.Models;
 
 namespace BTLW.Models;
 
@@ -15,6 +14,8 @@ public partial class Lttqnhom6Context : DbContext
         : base(options)
     {
     }
+
+    public virtual DbSet<AnhNoiThat> AnhNoiThats { get; set; }
 
     public virtual DbSet<CaLam> CaLams { get; set; }
 
@@ -50,10 +51,30 @@ public partial class Lttqnhom6Context : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=HOANG-NITRO-5\\SQLEXPRESS;Initial Catalog=lttqnhom6;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+        => optionsBuilder.UseSqlServer("Data Source=LAPTOP-PP0U79P7\\SQLEXPRESS;Initial Catalog=Lttqnhom6;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<AnhNoiThat>(entity =>
+        {
+            entity.HasKey(e => e.TenFileAnh).HasName("PK__AnhNoiTh__8E7F36210995D6BB");
+
+            entity.ToTable("AnhNoiThat");
+
+            entity.Property(e => e.TenFileAnh)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.MaNoiThat)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .IsFixedLength();
+
+            entity.HasOne(d => d.MaNoiThatNavigation).WithMany(p => p.AnhNoiThats)
+                .HasForeignKey(d => d.MaNoiThat)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__AnhNoiTha__MaNoi__628FA481");
+        });
+
         modelBuilder.Entity<CaLam>(entity =>
         {
             entity.HasKey(e => e.Maca).HasName("pk_CaLam");
@@ -87,7 +108,7 @@ public partial class Lttqnhom6Context : DbContext
 
         modelBuilder.Entity<ChiTietHddh>(entity =>
         {
-            entity.HasKey(e => new { e.MaNoithat, e.SoDdh }).HasName("PK__ChiTietH__F1EA73BAF60F8D41");
+            entity.HasKey(e => new { e.MaNoithat, e.SoDdh }).HasName("PK__ChiTietH__F1EA73BAB1DE7930");
 
             entity.ToTable("ChiTietHDDH");
 
@@ -114,7 +135,7 @@ public partial class Lttqnhom6Context : DbContext
 
         modelBuilder.Entity<ChiTietHdn>(entity =>
         {
-            entity.HasKey(e => new { e.MaNoithat, e.SoHdn }).HasName("PK__ChiTietH__D1B8F75591B3036F");
+            entity.HasKey(e => new { e.MaNoithat, e.SoHdn }).HasName("PK__ChiTietH__D1B8F7551F6A2A99");
 
             entity.ToTable("ChiTietHDN");
 
@@ -191,7 +212,6 @@ public partial class Lttqnhom6Context : DbContext
             entity.Property(e => e.TenNoiThat)
                 .HasMaxLength(50)
                 .HasColumnName("tenNoiThat");
-            entity.Property(e => e.ThoiGianBaoHanh).HasColumnType("date");
 
             entity.HasOne(d => d.MachatlieuNavigation).WithMany(p => p.DmnoiThats)
                 .HasForeignKey(d => d.Machatlieu)
@@ -421,20 +441,12 @@ public partial class Lttqnhom6Context : DbContext
                 .HasNoKey()
                 .ToTable("TaiKhoan");
 
-            entity.Property(e => e.MaNv)
-                .HasMaxLength(50)
-                .IsUnicode(false)
-                .IsFixedLength()
-                .HasColumnName("MaNV");
+            entity.Property(e => e.LoaiTk).HasColumnName("LoaiTK");
             entity.Property(e => e.MaTk).HasColumnName("MaTK");
             entity.Property(e => e.MatKhau).HasMaxLength(50);
             entity.Property(e => e.TenTk)
                 .HasMaxLength(50)
                 .HasColumnName("TenTK");
-
-            entity.HasOne(d => d.MaNvNavigation).WithMany()
-                .HasForeignKey(d => d.MaNv)
-                .HasConstraintName("FK_TaiKhoan_NhanVien");
         });
 
         modelBuilder.Entity<TheLoai>(entity =>

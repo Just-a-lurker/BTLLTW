@@ -1,8 +1,18 @@
+using BTLW.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionString = builder.Configuration.GetConnectionString("Lttqnhom6Context");
+builder.Services.AddDbContext<Lttqnhom6Context>(x => x.UseSqlServer(connectionString));
 // Add services to the container.
-builder.Services.AddControllersWithViews();
 
+builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
+
+builder.Services.AddSession();
+//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -15,13 +25,18 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+//
+//app.UseAuthentication();
+app.MapRazorPages();
+//app.MapDefaultControllerRoute();
+//
 app.UseRouting();
+app.UseAuthentication();;
 
 app.UseAuthorization();
-
+app.UseSession();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Main}/{action=Home2}/{id?}");
+    pattern: "{controller=Access}/{action=Login}/{id?}");
 
 app.Run();
