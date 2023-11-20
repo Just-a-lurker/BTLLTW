@@ -1,0 +1,37 @@
+﻿@model BTLW.Models.User;
+@{
+    ViewData["Title"] = "Dangky";
+    Layout = "~/Views/Shared/_LayoutRegister.cshtml";
+}
+<div class="content">
+    @using (Html.BeginForm("Dangky", "Account", FormMethod.Post))
+    {
+        <div class="form-group">
+        </div>
+        <div class="group">
+            <div class="form-control-lg">
+                @Html.LabelFor(Model=>Model.TenTK)
+                @Html.TextBoxFor(Model=>Model.TenTK,new{placeholder="TenTK",@class="form-control"})
+                @Html.ValidationMessageFor(Model=>Model.TenTK)
+            </div>
+            <div class="form-control-lg">
+                @Html.LabelFor(Model=>Model.MatKhau)
+                @Html.PasswordFor(Model=>Model.MatKhau,new{placeholder="MatKhau",@class="form-control"})
+                @Html.ValidationMessageFor(Model=>Model.MatKhau)
+            </div>
+            <div class="form-control-lg">
+                @Html.LabelFor(Model=>Model.ConfirmPassword)
+                @Html.PasswordFor(Model=>Model.ConfirmPassword,new{placeholder="ConfirmPassword",@class="form-control"})
+                @Html.ValidationMessageFor(Model=>Model.ConfirmPassword)
+            </div>
+            <div class="form-control-lg">
+                @Html.LabelFor(Model=>Model.LoaiTK)
+                @Html.TextBoxFor(Model=>Model.LoaiTK,new{placeholder="LoaiTK",@class="form-control"})
+                @Html.ValidationMessageFor(Model=>Model.LoaiTK)
+            </div>
+            <button type="submit" value="Dangky" class="btn btn-success">Register</button>
+        </div>
+
+    }
+</div>
+
