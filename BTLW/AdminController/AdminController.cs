@@ -90,7 +90,7 @@ namespace BTLW.AdminController
         public IActionResult XoaSanPham(string manoithat)
         {
             TempData["Message"] = "";
-            var ct=db.ChiTietHdns.Where(x=>x.MaNoithat== manoithat).ToList();
+            var ct=db.DmnoiThats.Where(x=>x.MaNoiThat== manoithat).ToList();
             if(ct.Count()>0)
             {
                 TempData["Message"] = manoithat + " cant delete";
