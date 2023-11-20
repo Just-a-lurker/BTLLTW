@@ -2,12 +2,10 @@
 using BTLW.Models;
 using BTLW.Models.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data.Entity;
-using BTLW.Models;
 using X.PagedList;
-using System;
+using Microsoft.AspNetCore.Hosting;
 
 namespace BTLW.AdminController
 {
@@ -15,12 +13,17 @@ namespace BTLW.AdminController
     public class AdminController : Controller
 	{ 
 		Lttqnhom6Context db = new Lttqnhom6Context();
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-		public IActionResult Index()
-		{
-            ViewBag.Time=System.DateTime.Now;
-			return View();
-		}
+        public AdminController(IWebHostEnvironment webHostEnvironment)
+        {
+            _webHostEnvironment = webHostEnvironment;
+        }
+        public IActionResult Index()
+        {
+            ViewBag.Time = System.DateTime.Now;
+            return View();
+        }
         [Route("DanhMucTaiKhoan")]
         public IActionResult Register(int? page)
         {
@@ -96,7 +99,7 @@ namespace BTLW.AdminController
         {
             TempData["Message"] = "";
             var ct = db.TaiKhoans.Where(x => x.MaTk == mataikhoan).ToList();
-           
+
             db.Remove(db.TaiKhoans.Find(mataikhoan));
             db.SaveChanges();
             TempData["Message"] = "TK[" + mataikhoan + "] deleted";
@@ -123,7 +126,7 @@ namespace BTLW.AdminController
             ViewBag.Manuocsx = new SelectList(db.NuocSxes.ToList(), "Manuocsx", "Tennuocsx");
             return View();
         }
-        [Route("ThemSanPhamMoi")]
+        /*[Route("ThemSanPhamMoi")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ThemSanPhamMoi(DmnoiThat dmnoiThat)
@@ -143,7 +146,47 @@ namespace BTLW.AdminController
            
             
             //return View(dmnoiThat);
+        }*/
+        [Route("ThemSanPhamMoi")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ThemSanPhamMoi(DmnoiThat dmnoiThat, IFormFile anhFile)
+        {
+            TempData["Message"] = "";
+            var dm = db.DmnoiThats.Where(x => x.MaNoiThat.Equals(dmnoiThat.MaNoiThat)).ToList();
+            if (dm.Count > 0)
+            {
+                TempData["Message"] = "Trùng mã nội thất";
+                return RedirectToAction("ThemMoiSanPham", "Admin");
+            }
+            else
+            {
+                db.DmnoiThats.Add(dmnoiThat);
+                db.SaveChanges();
+
+                if (anhFile != null && anhFile.Length > 0)
+                {
+                    var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "UploadedImages", anhFile.FileName);
+
+                    using (var stream = new FileStream(imagePath, FileMode.Create))
+                    {
+                        anhFile.CopyTo(stream);
+                    }
+
+                    var anhNoiThat = new AnhNoiThat
+                    {
+                        MaNoiThat = dmnoiThat.MaNoiThat,
+                        TenFileAnh = anhFile.FileName
+                    };
+
+                    db.AnhNoiThats.Add(anhNoiThat);
+                    db.SaveChanges();
+                }
+
+                return RedirectToAction("DanhMucSanPham");
+            }
         }
+
         [Route("SuaSanPham")]
         [HttpGet]
         public IActionResult SuaSanPham(string manoithat)
@@ -175,7 +218,7 @@ namespace BTLW.AdminController
         public IActionResult XoaSanPham(string manoithat)
         {
             TempData["Message"] = "";
-            var ct=db.DmnoiThats.Where(x=>x.MaNoiThat== manoithat).ToList();
+            var ct=db.ChiTietHdns.Where(x=>x.MaNoithat== manoithat).ToList();
             if(ct.Count()>0)
             {
                 TempData["Message"] = manoithat + " cant delete";
@@ -186,7 +229,7 @@ namespace BTLW.AdminController
             if (asp.Any()) db.RemoveRange(asp);
             db.Remove(db.DmnoiThats.Find(manoithat));
             db.SaveChanges();
-            TempData["Message"] = "Product["+ manoithat + "] deleted";
+            TempData["Message"] = ct+" deleted";
             return RedirectToAction("DanhMucSanPham", "Admin");
         }
         [Route("ChiTietSanPham")]
