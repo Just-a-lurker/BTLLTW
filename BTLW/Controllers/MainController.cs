@@ -24,6 +24,7 @@ namespace BTLW.Controllers
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
             var noiThat = db.DmnoiThats.Where(x=>x.Maloai==maLoai);
             PagedList<DmnoiThat> lstNoiThat = new PagedList<DmnoiThat>(noiThat, pageNumber, pageSize);
+			ViewBag.maLoai = maLoai;
             return View(lstNoiThat);
 		}
 
@@ -50,6 +51,7 @@ namespace BTLW.Controllers
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
             var noiThat = db.DmnoiThats.Where(x => x.Manuocsx==maNuocSx);
             PagedList<DmnoiThat> lstNoiThat = new PagedList<DmnoiThat>(noiThat, pageNumber, pageSize);
+			ViewBag.maNuocSx = maNuocSx;
             return View(lstNoiThat);
 		}
 

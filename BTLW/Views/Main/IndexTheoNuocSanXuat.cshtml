@@ -130,7 +130,7 @@
         <div class="tab-content product_container">
             <div class="tab-pane fade show active" id="products" role="tabpanel">
                 <div class="product_gallery">
-                    <div class="row">
+                    <div id="displayProductsNaltion" class="row">
                         @foreach (var item in Model)
                         {
                             <div class="col-lg-3 col-md-4 col-sm-6">
@@ -157,6 +157,11 @@
                                 </article>
                             </div>
                         }
+                        <div class="loding_bar">
+                            <ul class="d-flex justify-content-center">
+                                @Html.PagedListPager(Model, page=>Url.Action("IndexTheoNuocSanXuat", new {page = page, maNuocSx = ViewBag.maNuocSx}))
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>

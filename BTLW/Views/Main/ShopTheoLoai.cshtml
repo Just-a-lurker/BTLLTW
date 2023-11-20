@@ -56,7 +56,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="displayProducts" class="shop_gallery">
+                        <div class="shop_gallery">
+                            <div id="displayProducts" class="row">
                                 @foreach (var item in Model)
                                 {
                                     <div class="col-lg-4 col-md-4 col-sm-6">
@@ -75,6 +76,11 @@
                                         </article>
                                     </div>
                                 }
+                                <div class="loding_bar">
+                                    <ul class="d-flex justify-content-center">
+                                        @Html.PagedListPager(Model, page=>Url.Action("Shop", new {page = page, maloai = ViewBag.maLoai}))
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>

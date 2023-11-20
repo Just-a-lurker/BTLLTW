@@ -3,9 +3,45 @@
     <ul class="nav justify-content-center">
         @foreach (var item in Model)
         {
-            <li>
-                <a asp-controller="Main" asp-action="IndexTheoNuocSanXuat" asp-route-maNuocSx="@item.Manuocsx">@item.Tennuocsx</a>
-            </li>
+                var getUrl = "https://localhost:7005/api/product2api/" + item.Manuocsx;
+                <li><a style="cursor: pointer" onclick="showProductByNaltional ('@getUrl')">@item.Tennuocsx</a></li>
+               @*  <li><a asp-controller="Main" asp-action="IndexTheoNuocSanXuat" asp-route-maNuocSx="@item.Manuocsx">@item.Tennuocsx</a></li> *@
         }
     </ul>
 </div>
+<script>
+    function showProductByNaltional(getUrl) {
+        var str = '';
+        $.ajax({
+            type: 'GET',
+            url: getUrl,
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, val) {
+                    str += '<div class="col-lg-3 col-md-4 col-sm-6">';
+                    str += '<article class="single_product wow fadeInUp" data-wow-delay="0.1s" data-wow-duration="1.1s">';
+                    str += '<figure>';
+                    str += '<div class="product_thumb">';
+                    str += '<a href =\"Main/Detail?maNoiThat=';
+                    str += val.maNoiThat + '">';
+                    var linkImage = "../Image_Furniture/" + val.anh;
+                    str += '<img src=\"' + linkImage + '\"alt = "" ></a></div>';
+                    str += '<figcaption class="product_content">';
+                    str += '<h4><a href =\"Main/Detail?maNoiThat=';
+                    str += val.maNoiThat + '\">';
+                    str += val.tenNoiThat;
+                    str += '</a></h4>';
+                    str += '<div class="price_box">';
+                    str += '<span class="current_price">'; 
+                    str += val.donGiaBan + ' vnd </span>';
+                    str += '</div></figcaption></figure></article></div>';
+                });
+                $('#displayProductsNaltion').html(str);
+            },
+            Error: function (xhr) {
+                alert(xhr.responseText)
+            }
+        });
+    }
+</script>
+

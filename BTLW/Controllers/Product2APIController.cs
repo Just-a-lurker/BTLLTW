@@ -1,16 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using BTLW.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using BTLW.Models;
 using BTLW.Models.ProductModel;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BTLW.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductAPIController : ControllerBase
+    public class Product2APIController : ControllerBase
     {
-        Lttqnhom6Context db = new Lttqnhom6Context();
+        Lttqnhom6Context db = new Lttqnhom6Context();   
 
         public IEnumerable<Product> GetAllProducts()
         {
@@ -38,12 +37,12 @@ namespace BTLW.Controllers
             return sanPham;
         }
 
-        [HttpGet("{maloai}")]
+        [HttpGet("{manuocsx}")]
 
-        public IEnumerable<Product> GetProductsByCategory(string maloai)
+        public IEnumerable<Product> GetProductsByNaltion(string manuocsx)
         {
             var sanPham = (from p in db.DmnoiThats
-                           where p.Maloai == maloai
+                           where p.Manuocsx == manuocsx
                            select new Product
                            {
                                MaNoiThat = p.MaNoiThat,
@@ -66,7 +65,5 @@ namespace BTLW.Controllers
 
             return sanPham;
         }
-
-        
     }
 }

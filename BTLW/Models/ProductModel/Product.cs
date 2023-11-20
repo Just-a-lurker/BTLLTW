@@ -10,6 +10,8 @@ namespace BTLW.Models.ProductModel
 
         public string Maloai { get; set; } = null!;
 
+        public string Manuocsx { get; set; } = null!;
+
         public int? SoLuong { get; set; }
 
         public int? DonGiaNhap { get; set; }
