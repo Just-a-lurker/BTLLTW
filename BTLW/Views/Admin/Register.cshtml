@@ -1,0 +1,55 @@
+﻿@model IEnumerable<BTLW.Models.TaiKhoan>
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Register</h1>
+<p>@TempData["Message"]</p>
+<p>
+    <a asp-action="ThemTaiKhoan">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TenTk)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MatKhau)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LoaiTk)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenTk)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MatKhau)
+            </td>
+            <td>
+                    @if (item.LoaiTk == true)
+                    {
+                        <p>Admin</p>
+                    }
+                    else
+                    {
+                        <p>User</p>
+                    }
+                </td>
+            <td>
+                <a asp-action="SuaTaiKhoan" asp-route-mataikhoan="@item.MaTk">Edit</a> |
+                    <a asp-action="Details" asp-route-mataikhoan="@item.MaTk">Details</a> |
+                    <a asp-action="XoaTaiKhoan" asp-route-mataikhoan="@item.MaTk">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

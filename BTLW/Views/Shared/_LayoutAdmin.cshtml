@@ -45,7 +45,7 @@
                                 <span class="availability-status online"></span>
                             </div>
                             <div class="nav-profile-text">
-                                <p class="mb-1 text-black">@* @HttpContext.Session.GetString("TenTK").ToString() *@</p>
+                                <p class="mb-1 text-black">@* @TempData["Name"] *@ @ViewData["UserName"]</p>
                             </div>
                         </a>
                         <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
@@ -187,14 +187,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">
-                            <span class="menu-title">Dashboard</span>
+                        <a class="nav-link" asp-controller="Admin" asp-action="DanhMucSanPham">
+                            <span class="menu-title">Danh Mục Sản Phẩm</span>
                             <i class="mdi mdi-home menu-icon"></i>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                            <span class="menu-title">Hóa đơn</span>
+                            <span class="menu-title">Danh Mục Hóa đơn</span>
                             <i class="menu-arrow"></i>
                             <i class="mdi mdi-crosshairs-gps menu-icon"></i>
                         </a>
@@ -202,14 +202,14 @@
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item"> <a class="nav-link" asp-controller="Admin" asp-action="HDN">Hóa đơn nhập</a></li>
                                 <li class="nav-item"> <a class="nav-link" asp-controller="Admin" asp-action="DDH">Hóa đơn đặt hàng</a></li>
-                                <li class="nav-item"> <a class="nav-link" asp-controller="Admin"asp-action="DanhMucSanPham">Danh Mục Sản Phẩm</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
+                               @*  <li class="nav-item"> <a class="nav-link" asp-controller="Admin"asp-action="DanhMucSanPham">Danh Mục Sản Phẩm</a></li> *@
+                                @* <li class="nav-item"> <a class="nav-link" asp-controller="Admin" asp-action="Register">TK</a></li> *@
                             </ul>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/icons/mdi.html">
-                            <span class="menu-title">Icons</span>
+                        <a class="nav-link" asp-controller="Admin" asp-action="Register" >
+                            <span class="menu-title">Danh Mục Tài Khoản</span>
                             <i class="mdi mdi-contacts menu-icon"></i>
                         </a>
                     </li>
@@ -249,14 +249,14 @@
                     </li>
                     <li class="nav-item sidebar-actions">
                         <span class="nav-link">
-                            <div class="border-bottom">
+                            @* <div class="border-bottom">
                                 <h6 class="font-weight-normal mb-3">Projects</h6>
-                            </div>
-                            <button class="btn btn-block btn-lg btn-gradient-primary mt-4">+ Add a project</button>
+                            </div> *@
+                           @*  <button class="btn btn-block btn-lg btn-gradient-primary mt-4">+ Add a project</button> *@
                             <div class="mt-4">
-                                <div class="border-bottom">
+                             @*    <div class="border-bottom">
                                     <p class="text-secondary">Categories</p>
-                                </div>
+                                </div> *@
                                 <ul class="gradient-bullet-list mt-4">
                                     <li>Free</li>
                                     <li>Pro</li>
