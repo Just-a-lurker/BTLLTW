@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data.Entity;
 using BTLW.Models;
 using X.PagedList;
+using System;
 
 namespace BTLW.AdminController
 {
@@ -17,6 +18,7 @@ namespace BTLW.AdminController
 
 		public IActionResult Index()
 		{
+            ViewBag.Time=System.DateTime.Now;
 			return View();
 		}
         [Route("DanhMucTaiKhoan")]
@@ -33,6 +35,12 @@ namespace BTLW.AdminController
         [HttpGet]
         public IActionResult ThemTaiKhoan()
         {
+            ViewBag.Maloai = new SelectList(
+                            new List<SelectListItem>
+                            {
+                                new SelectListItem { Text = "True", Value = "True"},
+                                new SelectListItem {Text = "False", Value = "False"},
+                            }, "Value", "Text");
             return View();
         }
         [Route("ThemTaiKhoan")]
@@ -52,10 +60,48 @@ namespace BTLW.AdminController
                 //TempData["Message"] = "Ok";
                 db.TaiKhoans.Add(user);
                 db.SaveChanges();
-                return RedirectToAction("Login", "Access");
+                return RedirectToAction("Register", "Admin");
             }
         }
+        [Route("SuaTaiKhoan")]
+        [HttpGet]
+        public IActionResult SuaTaiKhoan(int mataikhoan)
+        {
+            ViewBag.Maloai = new SelectList(
+                 new List<SelectListItem>
+                 {
+                                new SelectListItem { Text = "True", Value = "True"},
+                                new SelectListItem {Text = "False", Value = "False"},
+                 }, "Value", "Text");
+            ViewBag.manoithat = mataikhoan;
+            var sp = db.TaiKhoans.Find(mataikhoan);
 
+            return View(sp);
+        }
+        [Route("SuaTaiKhoan")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SuaTaiKhoan(TaiKhoan user)
+        {
+
+            db.Update(user);
+            db.SaveChanges();
+            return RedirectToAction("Register", "Admin");
+
+
+        }
+        [Route("XoaTaiKhoan")]
+        [HttpGet]
+        public IActionResult XoaTaiKhoan(int mataikhoan)
+        {
+            TempData["Message"] = "";
+            var ct = db.TaiKhoans.Where(x => x.MaTk == mataikhoan).ToList();
+           
+            db.Remove(db.TaiKhoans.Find(mataikhoan));
+            db.SaveChanges();
+            TempData["Message"] = "TK[" + mataikhoan + "] deleted";
+            return RedirectToAction("Register", "Admin");
+        }
         [Route("DanhMucSanPham")]
         public IActionResult DanhMucSanPham(int ?page)
         {
@@ -140,7 +186,7 @@ namespace BTLW.AdminController
             if (asp.Any()) db.RemoveRange(asp);
             db.Remove(db.DmnoiThats.Find(manoithat));
             db.SaveChanges();
-            TempData["Message"] = ct+" deleted";
+            TempData["Message"] = "Product["+ manoithat + "] deleted";
             return RedirectToAction("DanhMucSanPham", "Admin");
         }
         [Route("ChiTietSanPham")]
