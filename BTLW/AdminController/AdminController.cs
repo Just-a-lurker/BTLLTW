@@ -20,9 +20,91 @@ namespace BTLW.AdminController
             _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
-		{
-			return View();
-		}
+        {
+            ViewBag.Time = System.DateTime.Now;
+            return View();
+        }
+        [Route("DanhMucTaiKhoan")]
+        public IActionResult Register(int? page)
+        {
+            int pageSize = 8;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+
+            var lstsp = db.TaiKhoans.AsNoTracking().OrderBy(x => x.TenTk).ToList();
+            PagedList<TaiKhoan> a = new PagedList<TaiKhoan>(lstsp, pageNumber, pageSize);
+            return View(a);
+        }
+        [Route("ThemTaiKhoan")]
+        [HttpGet]
+        public IActionResult ThemTaiKhoan()
+        {
+            ViewBag.Maloai = new SelectList(
+                            new List<SelectListItem>
+                            {
+                                new SelectListItem { Text = "Admin", Value = "True"},
+                                new SelectListItem {Text = "User", Value = "False"},
+                            }, "Value", "Text");
+            return View();
+        }
+        [Route("ThemTaiKhoan")]
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public IActionResult ThemTaiKhoan(TaiKhoan user)
+        {
+            /*empData["Message"] = "";*/
+            var dm = db.TaiKhoans.Where(x => x.TenTk.Equals(user.TenTk)).ToList();
+            if (dm.Count > 0)
+            {
+                //TempData["Message"] = "trung ma tK";
+                return RedirectToAction("ThemTaiKhoan", "Admin");
+            }
+            else
+            {
+                //TempData["Message"] = "Ok";
+                db.TaiKhoans.Add(user);
+                db.SaveChanges();
+                return RedirectToAction("Register", "Admin");
+            }
+        }
+        [Route("SuaTaiKhoan")]
+        [HttpGet]
+        public IActionResult SuaTaiKhoan(int mataikhoan)
+        {
+            ViewBag.Maloai = new SelectList(
+                 new List<SelectListItem>
+                 {
+                                new SelectListItem { Text = "Admin", Value = "True"},
+                                new SelectListItem {Text = "User", Value = "False"},
+                 }, "Value", "Text");
+            ViewBag.manoithat = mataikhoan;
+            var sp = db.TaiKhoans.Find(mataikhoan);
+
+            return View(sp);
+        }
+        [Route("SuaTaiKhoan")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SuaTaiKhoan(TaiKhoan user)
+        {
+
+            db.Update(user);
+            db.SaveChanges();
+            return RedirectToAction("Register", "Admin");
+
+
+        }
+        [Route("XoaTaiKhoan")]
+        [HttpGet]
+        public IActionResult XoaTaiKhoan(int mataikhoan)
+        {
+            TempData["Message"] = "";
+            var ct = db.TaiKhoans.Where(x => x.MaTk == mataikhoan).ToList();
+
+            db.Remove(db.TaiKhoans.Find(mataikhoan));
+            db.SaveChanges();
+            TempData["Message"] = "TK[" + mataikhoan + "] deleted";
+            return RedirectToAction("Register", "Admin");
+        }
         [Route("DanhMucSanPham")]
         public IActionResult DanhMucSanPham(int ?page)
         {
