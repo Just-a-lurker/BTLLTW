@@ -41,24 +41,43 @@ namespace BTLW.AdminController
         [Route("ThemSanPhamMoi")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult ThemSanPhamMoi(DmnoiThat dmnoiThat)
+        public IActionResult ThemSanPhamMoi(DmnoiThat dmnoiThat, IFormFile anhFile)
         {
             TempData["Message"] = "";
-            var dm=db.DmnoiThats.Where(x=>x.MaNoiThat.Equals(dmnoiThat.MaNoiThat)).ToList();
-            if(dm.Count > 0)
+            var dm = db.DmnoiThats.Where(x => x.MaNoiThat.Equals(dmnoiThat.MaNoiThat)).ToList();
+            if (dm.Count > 0)
             {
-                TempData["Message"] = "trung ma noi that";
-                return RedirectToAction("ThemMoiSanPham","Admin");   
-            }else
+                TempData["Message"] = "Trùng mã nội thất";
+                return RedirectToAction("ThemMoiSanPham", "Admin");
+            }
+            else
             {
                 db.DmnoiThats.Add(dmnoiThat);
                 db.SaveChanges();
+
+                if (anhFile != null && anhFile.Length > 0)
+                {
+                    byte[] imageData;
+
+                    using (var binaryReader = new BinaryReader(anhFile.OpenReadStream()))
+                    {
+                        imageData = binaryReader.ReadBytes((int)anhFile.Length);
+                    }
+
+                    var anhNoiThat = new AnhNoiThat
+                    {
+                        MaNoiThat = dmnoiThat.MaNoiThat,
+                        TenFileAnh = anhFile.FileName
+                    };
+
+                    db.AnhNoiThats.Add(anhNoiThat);
+                    db.SaveChanges();
+                }
+
                 return RedirectToAction("DanhMucSanPham");
             }
-           
-            
-            //return View(dmnoiThat);
         }
+
         [Route("SuaSanPham")]
         [HttpGet]
         public IActionResult SuaSanPham(string manoithat)
