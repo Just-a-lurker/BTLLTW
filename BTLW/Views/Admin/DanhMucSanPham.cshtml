@@ -1,0 +1,60 @@
+﻿@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<DmnoiThat>;
+@using BTLW.Models;
+@{
+    ViewData["Title"] = "DanhMucSanPham";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<h1>Danh Mục Sản Phẩm</h1>
+
+<p>
+    <a asp-action="ThemSanPhamMoi">Create New</a>
+</p>
+<p>@TempData["Message"]</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tên Nội Thất
+            </th>
+            <th>
+               Số Lượng
+            </th>
+            <th>
+                Đơn giá nhập
+            </th>
+            <th>
+                Đơn giá bán
+            </th>
+            <th>Chức năng</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenNoiThat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoLuong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DonGiaNhap)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DonGiaBan)
+            </td>
+            <td>
+                    <a asp-action="SuaSanPham" asp-route-manoithat="@item.MaNoiThat">Edit</a> |
+                    <a asp-action="ChiTietSanPham" asp-route-manoithat="@item.MaNoiThat">Details</a> |
+                    <a asp-action="XoaSanPham" asp-route-manoithat="@item.MaNoiThat">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@Html.PagedListPager(Model,page=>Url.Action("DanhMucSanPham",new{page=page}),new
+X.PagedList.Web.Common.PagedListRenderOptions(){
+    LiElementClasses=new List<String>{"page-iten"},PageClasses=new List<String>{"page-link"}
+})

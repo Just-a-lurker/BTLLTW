@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Http;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- Required meta tags -->
@@ -19,6 +21,7 @@
     <link rel="shortcut icon" href="../assets/admin/assets/images/favicon.ico" />
 </head>
 <body>
+  
     <div class="container-scroller">
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -42,7 +45,7 @@
                                 <span class="availability-status online"></span>
                             </div>
                             <div class="nav-profile-text">
-                                <p class="mb-1 text-black">David Greymaax</p>
+                                <p class="mb-1 text-black">@* @HttpContext.Session.GetString("TenTK").ToString() *@</p>
                             </div>
                         </a>
                         <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
@@ -50,7 +53,7 @@
                                 <i class="mdi mdi-cached me-2 text-success"></i> Activity Log
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">
+                            <a asp-controller="Access" asp-action="Logout"  class="dropdown-item">
                                 <i class="mdi mdi-logout me-2 text-primary"></i> Signout
                             </a>
                         </div>
@@ -199,6 +202,8 @@
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item"> <a class="nav-link" asp-controller="Admin" asp-action="HDN">Hóa đơn nhập</a></li>
                                 <li class="nav-item"> <a class="nav-link" asp-controller="Admin" asp-action="DDH">Hóa đơn đặt hàng</a></li>
+                                <li class="nav-item"> <a class="nav-link" asp-controller="Admin"asp-action="DanhMucSanPham">Danh Mục Sản Phẩm</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
                             </ul>
                         </div>
                     </li>

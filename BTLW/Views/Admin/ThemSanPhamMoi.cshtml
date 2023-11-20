@@ -1,0 +1,82 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model BTLW.Models.DmnoiThat
+
+@{
+    ViewData["Title"] = "ThemSanPhamMoi";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Thêm Sản Phẩm Mới</h2>
+<p>@TempData["Message"]</p>
+<h4>DmnoiThat</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ThemSanPhamMoi">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Mã Nội Thất</label>
+                <input asp-for="MaNoiThat" class="form-control" />
+                <span asp-validation-for="MaNoiThat" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label  class="control-label">Tên Nội Thất</label>
+                <input asp-for="TenNoiThat" class="form-control" />
+                <span asp-validation-for="TenNoiThat" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Mã Loại</label>
+                <select asp-for="Maloai" class ="form-control" asp-items="ViewBag.Maloai"></select>
+            </div>
+            <div class="form-group">
+                <label  class="control-label">Mã Kiểu</label>
+                <select asp-for="Makieu" class ="form-control" asp-items="ViewBag.Makieu"></select>
+            </div>
+            <div class="form-group">
+                <label  class="control-label">Mã Màu</label>
+                <select asp-for="Mamau" class ="form-control" asp-items="ViewBag.Mamau"></select>
+            </div>
+            <div class="form-group">
+                <label  class="control-label">Mã chất liệu</label>
+                <select asp-for="Machatlieu" class ="form-control" asp-items="ViewBag.Machatlieu"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Mã Nước SX</label>
+                <select asp-for="Manuocsx" class ="form-control" asp-items="ViewBag.Manuocsx"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Số Lượng</label>
+                <input asp-for="SoLuong" class="form-control" />
+                <span asp-validation-for="SoLuong" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label  class="control-label">Đơn Giá Nhập</label>
+                <input asp-for="DonGiaNhap" class="form-control" />
+                <span asp-validation-for="DonGiaNhap" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Đơn Giá Bán</label>
+                <input asp-for="DonGiaBan" class="form-control" />
+                <span asp-validation-for="DonGiaBan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Ảnh</label>
+                <input asp-for="Anh" class="form-control" />
+                <span asp-validation-for="Anh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Thời Gian Bảo Hành</label>
+                <input asp-for="ThoiGianBaoHanh" class="form-control" />
+                <span asp-validation-for="ThoiGianBaoHanh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="DanhMucSanPham">Back to List</a>
+</div>
+

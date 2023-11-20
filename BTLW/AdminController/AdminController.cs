@@ -1,19 +1,116 @@
 ﻿using Azure;
 using BTLW.Models;
+using BTLW.Models.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Data.Entity;
 using X.PagedList;
 
 namespace BTLW.AdminController
 {
-	public class AdminController : Controller
-	{
+    //[Route("admin")]
+    public class AdminController : Controller
+	{ 
 		Lttqnhom6Context db = new Lttqnhom6Context();
 
 		public IActionResult Index()
 		{
 			return View();
 		}
+        [Route("DanhMucSanPham")]
+        public IActionResult DanhMucSanPham(int ?page)
+        {
+            int pageSize = 8;
+            int pageNumber=page==null||page<0?1:page.Value;
+
+            var lstsp=db.DmnoiThats.AsNoTracking().OrderBy(x=>x.TenNoiThat).ToList();
+            PagedList<DmnoiThat> a=new PagedList<DmnoiThat>(lstsp,pageNumber,pageSize); 
+            return View(a); 
+        }
+        [Route("ThemSanPhamMoi")]
+        [HttpGet]
+        public IActionResult ThemSanPhamMoi()
+        {
+            ViewBag.Maloai = new SelectList(db.TheLoais.ToList(), "Maloai", "Tenloai");
+            ViewBag.Makieu = new SelectList(db.KieuDangs.ToList(), "Makieu", "Tenkieu");
+            ViewBag.Mamau = new SelectList(db.MauSacs.ToList(), "Mamau", "Tenmau");
+            ViewBag.Machatlieu = new SelectList(db.ChatLieus.ToList(), "Machatlieu", "Tenchatlieu");
+            ViewBag.Manuocsx = new SelectList(db.NuocSxes.ToList(), "Manuocsx", "Tennuocsx");
+            return View();
+        }
+        [Route("ThemSanPhamMoi")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ThemSanPhamMoi(DmnoiThat dmnoiThat)
+        {
+            TempData["Message"] = "";
+            var dm=db.DmnoiThats.Where(x=>x.MaNoiThat.Equals(dmnoiThat.MaNoiThat)).ToList();
+            if(dm.Count > 0)
+            {
+                TempData["Message"] = "trung ma noi that";
+                return RedirectToAction("ThemMoiSanPham","Admin");   
+            }else
+            {
+                db.DmnoiThats.Add(dmnoiThat);
+                db.SaveChanges();
+                return RedirectToAction("DanhMucSanPham");
+            }
+           
+            
+            //return View(dmnoiThat);
+        }
+        [Route("SuaSanPham")]
+        [HttpGet]
+        public IActionResult SuaSanPham(string manoithat)
+        {
+            ViewBag.Maloai = new SelectList(db.TheLoais.ToList(), "Maloai", "Tenloai");
+            ViewBag.Makieu = new SelectList(db.KieuDangs.ToList(), "Makieu", "Tenkieu");
+            ViewBag.Mamau = new SelectList(db.MauSacs.ToList(), "Mamau", "Tenmau");
+            ViewBag.Machatlieu = new SelectList(db.ChatLieus.ToList(), "Machatlieu", "Tenchatlieu");
+            ViewBag.Manuocsx = new SelectList(db.NuocSxes.ToList(), "Manuocsx", "Tennuocsx");
+            ViewBag.MaNoiThat = manoithat;
+            var sp = db.DmnoiThats.Find(manoithat);
+
+            return View(sp);
+        }
+        [Route("SuaSanPham")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SuaSanPham(DmnoiThat dmnoiThat)
+        {
+            
+                db.Update(dmnoiThat);   
+                db.SaveChanges();
+                return RedirectToAction("DanhMucSanPham", "Admin");
+        
+       
+        }
+        [Route("XoaSanPham")]
+        [HttpGet]
+        public IActionResult XoaSanPham(string manoithat)
+        {
+            TempData["Message"] = "";
+            var ct=db.ChiTietHdns.Where(x=>x.MaNoithat== manoithat).ToList();
+            if(ct.Count()>0)
+            {
+                TempData["Message"] = manoithat + " cant delete";
+                return RedirectToAction("DanhMucSanPham", "Admin");
+                
+            }
+            var asp=db.AnhNoiThats.Where(x=>x.MaNoiThat==manoithat);
+            if (asp.Any()) db.RemoveRange(asp);
+            db.Remove(db.DmnoiThats.Find(manoithat));
+            db.SaveChanges();
+            TempData["Message"] = ct+" deleted";
+            return RedirectToAction("DanhMucSanPham", "Admin");
+        }
+        [Route("ChiTietSanPham")]
+        public IActionResult ChiTietSanPham(string manoithat)
+        {
+            ViewBag.MaNT = manoithat;
+            var sp=db.DmnoiThats.SingleOrDefault(x => x.MaNoiThat == manoithat);
+            return View(sp);
+        }
 
         [Route("HDN")]
         public IActionResult HDN(int? page)
@@ -24,6 +121,7 @@ namespace BTLW.AdminController
             PagedList<HoaDonNhap> lst = new PagedList<HoaDonNhap>(lstHDN, pageNumber, pageSize);
             return View(lst);
         }
+        
         [Route("ThemHDN")]
         [HttpGet]
         public IActionResult ThemHDN()
