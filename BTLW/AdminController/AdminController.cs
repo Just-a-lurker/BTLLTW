@@ -229,7 +229,7 @@ namespace BTLW.AdminController
             if (asp.Any()) db.RemoveRange(asp);
             db.Remove(db.DmnoiThats.Find(manoithat));
             db.SaveChanges();
-            TempData["Message"] = ct+" deleted";
+            TempData["Message"] = manoithat +" deleted";
             return RedirectToAction("DanhMucSanPham", "Admin");
         }
         [Route("ChiTietSanPham")]
