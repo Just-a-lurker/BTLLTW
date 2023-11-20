@@ -35,8 +35,15 @@
                 @Html.DisplayFor(modelItem => item.MatKhau)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LoaiTk)
-            </td>
+                    @if (item.LoaiTk == true)
+                    {
+                        <p>Admin</p>
+                    }
+                    else
+                    {
+                        <p>User</p>
+                    }
+                </td>
             <td>
                 <a asp-action="SuaTaiKhoan" asp-route-mataikhoan="@item.MaTk">Edit</a> |
                     <a asp-action="Details" asp-route-mataikhoan="@item.MaTk">Details</a> |

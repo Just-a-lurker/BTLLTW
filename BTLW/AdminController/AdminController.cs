@@ -38,8 +38,8 @@ namespace BTLW.AdminController
             ViewBag.Maloai = new SelectList(
                             new List<SelectListItem>
                             {
-                                new SelectListItem { Text = "True", Value = "True"},
-                                new SelectListItem {Text = "False", Value = "False"},
+                                new SelectListItem { Text = "Admin", Value = "True"},
+                                new SelectListItem {Text = "User", Value = "False"},
                             }, "Value", "Text");
             return View();
         }
@@ -70,8 +70,8 @@ namespace BTLW.AdminController
             ViewBag.Maloai = new SelectList(
                  new List<SelectListItem>
                  {
-                                new SelectListItem { Text = "True", Value = "True"},
-                                new SelectListItem {Text = "False", Value = "False"},
+                                new SelectListItem { Text = "Admin", Value = "True"},
+                                new SelectListItem {Text = "User", Value = "False"},
                  }, "Value", "Text");
             ViewBag.manoithat = mataikhoan;
             var sp = db.TaiKhoans.Find(mataikhoan);
