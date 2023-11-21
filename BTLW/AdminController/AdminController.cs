@@ -60,6 +60,7 @@ namespace BTLW.AdminController
             }
             else
             {
+                if(user.TenTk.ToString() != null && user.MatKhau.ToString() != null)
                 TempData["Message1"] = "Ok";
                 db.TaiKhoans.Add(user);
                 db.SaveChanges();
