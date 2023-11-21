@@ -51,16 +51,16 @@ namespace BTLW.AdminController
         //[ValidateAntiForgeryToken]
         public IActionResult ThemTaiKhoan(TaiKhoan user)
         {
-            /*empData["Message"] = "";*/
+            TempData["Message1"] = "";
             var dm = db.TaiKhoans.Where(x => x.TenTk.Equals(user.TenTk)).ToList();
             if (dm.Count > 0)
             {
-                //TempData["Message"] = "trung ma tK";
+                TempData["Message1"] = "trung ten tK";
                 return RedirectToAction("ThemTaiKhoan", "Admin");
             }
             else
             {
-                //TempData["Message"] = "Ok";
+                TempData["Message1"] = "Ok";
                 db.TaiKhoans.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Register", "Admin");

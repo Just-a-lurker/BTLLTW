@@ -10,7 +10,7 @@ namespace BTLW.Controllers
 {
     public class AccessController : Controller
     {
-
+        public string uname = "";
         Lttqnhom6Context db = new Lttqnhom6Context();
         [HttpGet]
         public IActionResult Login()
@@ -44,6 +44,8 @@ namespace BTLW.Controllers
                     else
                     {
                         TempData["Name"] = user.TenTk;
+                        uname = user.TenTk;
+                        ViewBag.TenTK = uname;
                         ViewData["UserName"] = user.TenTk;
                         return RedirectToAction("index", "admin");
                         
