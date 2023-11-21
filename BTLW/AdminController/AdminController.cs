@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data.Entity;
 using X.PagedList;
 using Microsoft.AspNetCore.Hosting;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace BTLW.AdminController
 {
@@ -162,9 +164,18 @@ namespace BTLW.AdminController
             }
             else
             {
+                String mota = dmnoiThat.MoTa.ToString();
+                String[] sep = { "<p>", "</p>" };
+                String[] mota1 = mota.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+                dmnoiThat.MoTa = "";
+                foreach (String s in mota1)
+                {
+                    dmnoiThat.MoTa += s + " ";
+                }
+                db.DmnoiThats.Add(dmnoiThat);
+                db.SaveChanges();
                 if (dmnoiThat.UploadedFile != null && dmnoiThat.UploadedFile.Length > 0)
                 {
-
                     string imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "Image_Furniture", dmnoiThat.UploadedFile.FileName);
 
                     using (Stream stream = new FileStream(imagePath, FileMode.Create))
@@ -178,8 +189,6 @@ namespace BTLW.AdminController
                         TenFileAnh = dmnoiThat.UploadedFile.FileName
                     };
                     dmnoiThat.Anh = dmnoiThat.UploadedFile.FileName;
-                    db.DmnoiThats.Add(dmnoiThat);
-                    db.SaveChanges();
                     db.AnhNoiThats.Add(anhNoiThat);
                     db.SaveChanges();
                 }
