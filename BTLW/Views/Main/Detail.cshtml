@@ -75,7 +75,7 @@
                             <span class="current_price">@Model.DonGiaBan vnd</span>
                         </div>
                         <div class="product_desc">
-                            <p>@Model.MoTa</p>
+                            @Html.Raw(Model.MoTa)
                         </div> 
                     </form>
                 </div>
@@ -91,7 +91,7 @@
                     </div>
                     <div class="product_variant_quantity d-flex align-items-center">
                         <div class="pro-qty border">
-                            <input min="1" max="100" type="tex" value="1">
+                            <input min="1" max="100" type="text" value="1">
                         </div>
 						<button class="btn btn-link" type="submit">add to cart</button>
                     </div>

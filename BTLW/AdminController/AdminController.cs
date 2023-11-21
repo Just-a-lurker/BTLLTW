@@ -164,14 +164,6 @@ namespace BTLW.AdminController
             }
             else
             {
-                String mota = dmnoiThat.MoTa.ToString();
-                String[] sep = { "<p>", "</p>" };
-                String[] mota1 = mota.Split(sep, StringSplitOptions.RemoveEmptyEntries);
-                dmnoiThat.MoTa = "";
-                foreach (String s in mota1)
-                {
-                    dmnoiThat.MoTa += s + " ";
-                }
                 db.DmnoiThats.Add(dmnoiThat);
                 db.SaveChanges();
                 if (dmnoiThat.UploadedFile != null && dmnoiThat.UploadedFile.Length > 0)
@@ -216,12 +208,27 @@ namespace BTLW.AdminController
         [ValidateAntiForgeryToken]
         public IActionResult SuaSanPham(DmnoiThat dmnoiThat)
         {
-            
-                db.Update(dmnoiThat);   
+            if (dmnoiThat.UploadedFile != null && dmnoiThat.UploadedFile.Length > 0)
+            {
+                string imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "Image_Furniture", dmnoiThat.UploadedFile.FileName);
+
+                using (Stream stream = new FileStream(imagePath, FileMode.Create))
+                {
+                    dmnoiThat.UploadedFile.CopyTo(stream);
+                }
+
+                var anhNoiThat = new AnhNoiThat
+                {
+                    MaNoiThat = dmnoiThat.MaNoiThat,
+                    TenFileAnh = dmnoiThat.UploadedFile.FileName
+                };
+                dmnoiThat.Anh = dmnoiThat.UploadedFile.FileName;
+                db.AnhNoiThats.Update(anhNoiThat);
+                db.SaveChanges();
+            }
+            db.Update(dmnoiThat);   
                 db.SaveChanges();
                 return RedirectToAction("DanhMucSanPham", "Admin");
-        
-       
         }
         [Route("XoaSanPham")]
         [HttpGet]
