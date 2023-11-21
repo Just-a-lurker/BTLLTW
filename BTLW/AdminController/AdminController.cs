@@ -150,7 +150,7 @@ namespace BTLW.AdminController
         [Route("ThemSanPhamMoi")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult ThemSanPhamMoi(DmnoiThat dmnoiThat, IFormFile anhFile)
+        public IActionResult ThemSanPhamMoi(DmnoiThat dmnoiThat)
         {
             TempData["Message"] = "";
             var dm = db.DmnoiThats.Where(x => x.MaNoiThat.Equals(dmnoiThat.MaNoiThat)).ToList();
@@ -161,24 +161,24 @@ namespace BTLW.AdminController
             }
             else
             {
-                db.DmnoiThats.Add(dmnoiThat);
-                db.SaveChanges();
-
-                if (anhFile != null && anhFile.Length > 0)
+                if (dmnoiThat.UploadedFile != null && dmnoiThat.UploadedFile.Length > 0)
                 {
-                    var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "UploadedImages", anhFile.FileName);
 
-                    using (var stream = new FileStream(imagePath, FileMode.Create))
+                    string imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "Image_Furniture", dmnoiThat.UploadedFile.FileName);
+
+                    using (Stream stream = new FileStream(imagePath, FileMode.Create))
                     {
-                        anhFile.CopyTo(stream);
+                        dmnoiThat.UploadedFile.CopyTo(stream);
                     }
 
                     var anhNoiThat = new AnhNoiThat
                     {
                         MaNoiThat = dmnoiThat.MaNoiThat,
-                        TenFileAnh = anhFile.FileName
+                        TenFileAnh = dmnoiThat.UploadedFile.FileName
                     };
-
+                    dmnoiThat.Anh = dmnoiThat.UploadedFile.FileName;
+                    db.DmnoiThats.Add(dmnoiThat);
+                    db.SaveChanges();
                     db.AnhNoiThats.Add(anhNoiThat);
                     db.SaveChanges();
                 }
@@ -217,6 +217,9 @@ namespace BTLW.AdminController
         [HttpGet]
         public IActionResult XoaSanPham(string manoithat)
         {
+            //Xoa anh trong folder
+            //var dmnoiThat = db.DmnoiThats.Find(manoithat);
+            //string imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "Image_Furniture", dmnoiThat.Anh.ToString());
             TempData["Message"] = "";
             var ct=db.ChiTietHdns.Where(x=>x.MaNoithat== manoithat).ToList();
             if(ct.Count()>0)
@@ -229,6 +232,18 @@ namespace BTLW.AdminController
             if (asp.Any()) db.RemoveRange(asp);
             db.Remove(db.DmnoiThats.Find(manoithat));
             db.SaveChanges();
+            //Xoa anh trong folder
+            //var fileStream = new FileStream(
+            //imagePath,
+            // FileMode.Create,
+            //FileAccess.ReadWrite,
+            // FileShare.Read,
+            //4096,
+            //FileOptions.DeleteOnClose);
+            //using (fileStream)
+            //{
+            //    ;
+            //}
             TempData["Message"] = manoithat +" deleted";
             return RedirectToAction("DanhMucSanPham", "Admin");
         }

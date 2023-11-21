@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BTLW.Models;
 
 public partial class DmnoiThat
 {
+    [NotMapped]
+    [DataType(DataType.Upload)]
+    public IFormFile? UploadedFile { get; set; }
+
     public string MaNoiThat { get; set; } = null!;
 
     public string? TenNoiThat { get; set; }

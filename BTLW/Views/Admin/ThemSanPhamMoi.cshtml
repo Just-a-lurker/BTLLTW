@@ -12,7 +12,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="ThemSanPhamMoi">
+        <form asp-action="ThemSanPhamMoi" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label class="control-label">Mã Nội Thất</label>
@@ -61,8 +61,8 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Ảnh</label>
-                <input asp-for="Anh" type="file" class="form-control" />
-                <span asp-validation-for="Anh" class="text-danger"></span>
+                <input asp-for="UploadedFile"  class="form-control" />
+                <span asp-validation-for="UploadedFile" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="control-label">Thời Gian Bảo Hành</label>
