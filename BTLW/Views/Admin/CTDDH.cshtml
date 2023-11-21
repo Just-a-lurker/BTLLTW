@@ -1,4 +1,6 @@
-﻿@model IEnumerable<BTLW.Models.ChiTietHddh>
+﻿@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<ChiTietHddh>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     ViewData["Title"] = "CTDDH";
@@ -61,7 +63,12 @@
 }
     </tbody>
 </table>
+@Html.PagedListPager(Model,page=>Url.Action("CTDDH",new{page=page}),new
+X.PagedList.Web.Common.PagedListRenderOptions(){
+    LiElementClasses=new List<String>{"page-iten"},PageClasses=new List<String>{"page-link"}
+})
 
 <div>
     <a asp-action="DDH">Quay lại</a>
 </div>
+

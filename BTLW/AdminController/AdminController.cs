@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data.Entity;
 using X.PagedList;
+using Microsoft.AspNetCore.Hosting;
 
 namespace BTLW.AdminController
 {
@@ -12,11 +13,98 @@ namespace BTLW.AdminController
     public class AdminController : Controller
 	{ 
 		Lttqnhom6Context db = new Lttqnhom6Context();
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-		public IActionResult Index()
-		{
-			return View();
-		}
+        public AdminController(IWebHostEnvironment webHostEnvironment)
+        {
+            _webHostEnvironment = webHostEnvironment;
+        }
+        public IActionResult Index()
+        {
+            ViewBag.Time = System.DateTime.Now;
+            return View();
+        }
+        [Route("DanhMucTaiKhoan")]
+        public IActionResult Register(int? page)
+        {
+            int pageSize = 8;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+
+            var lstsp = db.TaiKhoans.AsNoTracking().OrderBy(x => x.TenTk).ToList();
+            PagedList<TaiKhoan> a = new PagedList<TaiKhoan>(lstsp, pageNumber, pageSize);
+            return View(a);
+        }
+        [Route("ThemTaiKhoan")]
+        [HttpGet]
+        public IActionResult ThemTaiKhoan()
+        {
+            ViewBag.Maloai = new SelectList(
+                            new List<SelectListItem>
+                            {
+                                new SelectListItem { Text = "Admin", Value = "True"},
+                                new SelectListItem {Text = "User", Value = "False"},
+                            }, "Value", "Text");
+            return View();
+        }
+        [Route("ThemTaiKhoan")]
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public IActionResult ThemTaiKhoan(TaiKhoan user)
+        {
+            /*empData["Message"] = "";*/
+            var dm = db.TaiKhoans.Where(x => x.TenTk.Equals(user.TenTk)).ToList();
+            if (dm.Count > 0)
+            {
+                //TempData["Message"] = "trung ma tK";
+                return RedirectToAction("ThemTaiKhoan", "Admin");
+            }
+            else
+            {
+                //TempData["Message"] = "Ok";
+                db.TaiKhoans.Add(user);
+                db.SaveChanges();
+                return RedirectToAction("Register", "Admin");
+            }
+        }
+        [Route("SuaTaiKhoan")]
+        [HttpGet]
+        public IActionResult SuaTaiKhoan(int mataikhoan)
+        {
+            ViewBag.Maloai = new SelectList(
+                 new List<SelectListItem>
+                 {
+                                new SelectListItem { Text = "Admin", Value = "True"},
+                                new SelectListItem {Text = "User", Value = "False"},
+                 }, "Value", "Text");
+            ViewBag.manoithat = mataikhoan;
+            var sp = db.TaiKhoans.Find(mataikhoan);
+
+            return View(sp);
+        }
+        [Route("SuaTaiKhoan")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SuaTaiKhoan(TaiKhoan user)
+        {
+
+            db.Update(user);
+            db.SaveChanges();
+            return RedirectToAction("Register", "Admin");
+
+
+        }
+        [Route("XoaTaiKhoan")]
+        [HttpGet]
+        public IActionResult XoaTaiKhoan(int mataikhoan)
+        {
+            TempData["Message"] = "";
+            var ct = db.TaiKhoans.Where(x => x.MaTk == mataikhoan).ToList();
+
+            db.Remove(db.TaiKhoans.Find(mataikhoan));
+            db.SaveChanges();
+            TempData["Message"] = "TK[" + mataikhoan + "] deleted";
+            return RedirectToAction("Register", "Admin");
+        }
         [Route("DanhMucSanPham")]
         public IActionResult DanhMucSanPham(int ?page)
         {
@@ -38,7 +126,7 @@ namespace BTLW.AdminController
             ViewBag.Manuocsx = new SelectList(db.NuocSxes.ToList(), "Manuocsx", "Tennuocsx");
             return View();
         }
-        [Route("ThemSanPhamMoi")]
+        /*[Route("ThemSanPhamMoi")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ThemSanPhamMoi(DmnoiThat dmnoiThat)
@@ -58,7 +146,47 @@ namespace BTLW.AdminController
            
             
             //return View(dmnoiThat);
+        }*/
+        [Route("ThemSanPhamMoi")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ThemSanPhamMoi(DmnoiThat dmnoiThat, IFormFile anhFile)
+        {
+            TempData["Message"] = "";
+            var dm = db.DmnoiThats.Where(x => x.MaNoiThat.Equals(dmnoiThat.MaNoiThat)).ToList();
+            if (dm.Count > 0)
+            {
+                TempData["Message"] = "Trùng mã nội thất";
+                return RedirectToAction("ThemMoiSanPham", "Admin");
+            }
+            else
+            {
+                db.DmnoiThats.Add(dmnoiThat);
+                db.SaveChanges();
+
+                if (anhFile != null && anhFile.Length > 0)
+                {
+                    var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "UploadedImages", anhFile.FileName);
+
+                    using (var stream = new FileStream(imagePath, FileMode.Create))
+                    {
+                        anhFile.CopyTo(stream);
+                    }
+
+                    var anhNoiThat = new AnhNoiThat
+                    {
+                        MaNoiThat = dmnoiThat.MaNoiThat,
+                        TenFileAnh = anhFile.FileName
+                    };
+
+                    db.AnhNoiThats.Add(anhNoiThat);
+                    db.SaveChanges();
+                }
+
+                return RedirectToAction("DanhMucSanPham");
+            }
         }
+
         [Route("SuaSanPham")]
         [HttpGet]
         public IActionResult SuaSanPham(string manoithat)
@@ -101,7 +229,7 @@ namespace BTLW.AdminController
             if (asp.Any()) db.RemoveRange(asp);
             db.Remove(db.DmnoiThats.Find(manoithat));
             db.SaveChanges();
-            TempData["Message"] = ct+" deleted";
+            TempData["Message"] = manoithat +" deleted";
             return RedirectToAction("DanhMucSanPham", "Admin");
         }
         [Route("ChiTietSanPham")]

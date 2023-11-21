@@ -76,6 +76,7 @@
     </tbody>
 </table>
 
-<div class="product__pagination">
-    @Html.PagedListPager(Model, page =>Url.Action("DDH", new{page = page}))
-</div>
+@Html.PagedListPager(Model,page=>Url.Action("DDH",new{page=page}),new
+X.PagedList.Web.Common.PagedListRenderOptions(){
+    LiElementClasses=new List<String>{"page-iten"},PageClasses=new List<String>{"page-link"}
+})
