@@ -3,7 +3,7 @@
     ViewData["Title"] = "Detail";
     Layout = "~/Views/Shared/_LayoutBeFurniture.cshtml";
 }
-@model BTLW.Models.DmnoiThat
+@model DmnoiThat
 <div class="breadcrumbs_area">
     <div class="container">
         <div class="row">
@@ -13,7 +13,7 @@
                     <ul class="d-flex justify-content-center">
                         <li><a asp-controller="Main" asp-action="Index">Home</a></li>
                         <li>></li>
-                        <li><a asp-controller="Main" asp-action="Detail">Detail Product</a></li>
+                        <li><a asp-controller="Main" asp-action="Detail" asp-route-maNoiThat="@Model.MaNoiThat">Detail Product</a></li>
                     </ul>
                 </div>
             </div>
@@ -75,28 +75,13 @@
                             <span class="current_price">@Model.DonGiaBan vnd</span>
                         </div>
                         <div class="product_desc">
-                            <p>In elit risus, volutpat sed vestibulum sit amet, bibendum in lorem. Etiam aliquet convallis nibh at tempus. Proin gravida tincidunt egestas. Curabitur porta nibh ac enim semper, vitae pretium ante sollicitudin. </p>
-                        </div>
-                        <div class="product_color_size d-flex">
-                            <div class="product_variant_size">
-                                <select>
-                                    <option value="1">Select Size</option>
-                                    <option value="2">Select Size2</option>
-                                    <option value="3">Select Size3</option>
-                                    <option value="4">Select Size4</option>
-                                </select>
-                            </div>
-                            <div class="product_variant_color d-flex align-items-center">
-                                <label>Select Color</label>
-                                <ul class="d-flex">
-                                    <li><a class="color1" href="#"></a></li>
-                                    <li><a class="color2" href="#"></a></li>
-                                    <li><a class="color3" href="#"></a></li>
-                                    <li><a class="color4" href="#"></a></li>
-                                    <li><a class="color5" href="#"></a></li>
-                                </ul>
-                            </div>
-                        </div>
+                            <p>Mỗi một chi tiết, mỗi một sản phẩm và hình ảnh đều là những dấu ấn, 
+                                là câu chuyện mà BeFurniture muốn gửi gắm đến mỗi khách hàng. BeFurniture hi vọng trong từng bộ sưu tập,
+                                từng sản phẩm và dịch vụ của mình sẽ trở thành một phần trong tổ ấm của mỗi gia đình Việt,
+								như một thông điệp "<b>mang yêu thương gửi trọn trong từng không gian sống</b>".
+								Hướng đến sự tiện ích, hiện đại tối giản và thân thiện môi trường là khát khao mà BeFurniture
+                                không ngừng theo đuổi. </p>
+                        </div> 
                     </form>
                 </div>
             </div>
@@ -104,23 +89,16 @@
                 <div class="product_details_right">
                     <div class="product_d_meta">
                         <span>
-                            SKU: N/A <br>
-                            Categories: Fashion, Under wear <br>
-                            Tag:  Underwear, Bikini, Sexy, Hot Trend <br>
-                            Product ID: 274
+                            SKU: N/A <br/>
+                            Categories: @Model.Maloai<br/>
+                            Product ID: @Model.MaNoiThat
                         </span>
                     </div>
                     <div class="product_variant_quantity d-flex align-items-center">
                         <div class="pro-qty border">
                             <input min="1" max="100" type="tex" value="1">
                         </div>
-                        <button class="btn btn-link" type="submit">add to cart</button>
-                    </div>
-                    <div class=" product_d_action">
-                        <ul class="d-flex">
-                            <li><a href="#" title="Add to wishlist"> <img src="assets/img/icon/heart.png" alt=""> Add to Wishlist <i class="ion-android-arrow-forward"></i></a></li>
-                            <li><a href="#" title="Add to wishlist"><i class="ion-android-arrow-back"></i> ADD TO COMPARE</a></li>
-                        </ul>
+						<button class="btn btn-link" type="submit">add to cart</button>
                     </div>
                 </div>
             </div>

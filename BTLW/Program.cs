@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,6 +16,7 @@ builder.Services.AddScoped<ILoaiNoiThatRepository, LoaiNoiThatRepository>();
 builder.Services.AddScoped<INuocSanXuatRepository, NuocSanXuatRepository>();
 
 builder.Services.AddControllersWithViews();
+
 builder.Services.AddRazorPages();
 
 builder.Services.AddSession();
