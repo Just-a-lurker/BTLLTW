@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using BTLW.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BTLW.Models;
@@ -51,13 +50,14 @@ public partial class Lttqnhom6Context : DbContext
     public virtual DbSet<TheLoai> TheLoais { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Data Source=HOANG-NITRO-5\\SQLEXPRESS;Initial Catalog=Lttqnhom6;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Data Source=HOANG-NITRO-5\\SQLEXPRESS;Initial Catalog=Lttqnhom6;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AnhNoiThat>(entity =>
         {
-            entity.HasKey(e => e.TenFileAnh).HasName("PK__AnhNoiTh__8E7F3621D8FDFA3B");
+            entity.HasKey(e => e.TenFileAnh).HasName("PK__AnhNoiTh__8E7F36212455A2FD");
 
             entity.ToTable("AnhNoiThat");
 
@@ -72,7 +72,7 @@ public partial class Lttqnhom6Context : DbContext
             entity.HasOne(d => d.MaNoiThatNavigation).WithMany(p => p.AnhNoiThats)
                 .HasForeignKey(d => d.MaNoiThat)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__AnhNoiTha__MaNoi__628FA481");
+                .HasConstraintName("FK__AnhNoiTha__MaNoi__74AE54BC");
         });
 
         modelBuilder.Entity<CaLam>(entity =>
@@ -108,7 +108,7 @@ public partial class Lttqnhom6Context : DbContext
 
         modelBuilder.Entity<ChiTietHddh>(entity =>
         {
-            entity.HasKey(e => new { e.MaNoithat, e.SoDdh }).HasName("PK__ChiTietH__F1EA73BA72ECFB97");
+            entity.HasKey(e => new { e.MaNoithat, e.SoDdh }).HasName("PK__ChiTietH__F1EA73BAD0133EA3");
 
             entity.ToTable("ChiTietHDDH");
 
@@ -125,17 +125,17 @@ public partial class Lttqnhom6Context : DbContext
             entity.HasOne(d => d.MaNoithatNavigation).WithMany(p => p.ChiTietHddhs)
                 .HasForeignKey(d => d.MaNoithat)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__ChiTietHD__MaNoi__5EBF139D");
+                .HasConstraintName("FK__ChiTietHD__MaNoi__70DDC3D8");
 
             entity.HasOne(d => d.SoDdhNavigation).WithMany(p => p.ChiTietHddhs)
                 .HasForeignKey(d => d.SoDdh)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__ChiTietHD__SoDDH__5FB337D6");
+                .HasConstraintName("FK__ChiTietHD__SoDDH__71D1E811");
         });
 
         modelBuilder.Entity<ChiTietHdn>(entity =>
         {
-            entity.HasKey(e => new { e.MaNoithat, e.SoHdn }).HasName("PK__ChiTietH__D1B8F755660A729F");
+            entity.HasKey(e => new { e.MaNoithat, e.SoHdn }).HasName("PK__ChiTietH__D1B8F755D95F70B7");
 
             entity.ToTable("ChiTietHDN");
 
@@ -152,12 +152,12 @@ public partial class Lttqnhom6Context : DbContext
             entity.HasOne(d => d.MaNoithatNavigation).WithMany(p => p.ChiTietHdns)
                 .HasForeignKey(d => d.MaNoithat)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__ChiTietHD__MaNoi__5AEE82B9");
+                .HasConstraintName("FK__ChiTietHD__MaNoi__6D0D32F4");
 
             entity.HasOne(d => d.SoHdnNavigation).WithMany(p => p.ChiTietHdns)
                 .HasForeignKey(d => d.SoHdn)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__ChiTietHD__SoHDN__5BE2A6F2");
+                .HasConstraintName("FK__ChiTietHD__SoHDN__6E01572D");
         });
 
         modelBuilder.Entity<CongViec>(entity =>
@@ -209,6 +209,7 @@ public partial class Lttqnhom6Context : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .IsFixedLength();
+            entity.Property(e => e.MoTa).HasMaxLength(696);
             entity.Property(e => e.TenNoiThat)
                 .HasMaxLength(50)
                 .HasColumnName("tenNoiThat");
@@ -437,7 +438,7 @@ public partial class Lttqnhom6Context : DbContext
 
         modelBuilder.Entity<TaiKhoan>(entity =>
         {
-            entity.HasKey(e => e.MaTk).HasName("PK__TaiKhoan__272500706251BA43");
+            entity.HasKey(e => e.MaTk).HasName("PK__TaiKhoan__272500707794EBEB");
 
             entity.ToTable("TaiKhoan");
 

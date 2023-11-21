@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace BTLW.Models;
 
@@ -34,6 +34,8 @@ public partial class DmnoiThat
     public string? Anh { get; set; }
 
     public int? ThoiGianBaoHanh { get; set; }
+
+    public string? MoTa { get; set; }
 
     public virtual ICollection<AnhNoiThat> AnhNoiThats { get; set; } = new List<AnhNoiThat>();
 
