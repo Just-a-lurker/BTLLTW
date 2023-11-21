@@ -6,18 +6,23 @@ using Microsoft.Win32;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNet.Identity;
+
 namespace BTLW.Controllers
 {
     public class AccessController : Controller
     {
         public string uname = "";
         Lttqnhom6Context db = new Lttqnhom6Context();
+
         [HttpGet]
         public IActionResult Login()
         {
             if (HttpContext.Session.GetString("TenTK") == null)
             {
                 return View();
+
             }
             else
             {
@@ -39,7 +44,14 @@ namespace BTLW.Controllers
                     if (b != null)
                     {
                         return RedirectToAction("index", "main");
-
+                        Response.Cookies.Append("UserLogin", b.TenTk.ToString(), new CookieOptions
+                        {
+                            Expires = DateTime.Now.AddDays(5)
+                        });
+                        Response.Cookies.Append("Password", b.MatKhau.ToString(), new CookieOptions
+                        {
+                            Expires = DateTime.Now.AddDays(5)
+                        });
                     }
                     else
                     {
