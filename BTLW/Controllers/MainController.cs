@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList;
+using BTLW.Models.Authentication;
 
 namespace BTLW.Controllers
 {
@@ -9,6 +10,7 @@ namespace BTLW.Controllers
 	{
 		Lttqnhom6Context db = new Lttqnhom6Context();
 
+		[Authentication]
 		public IActionResult Shop(int? page)
 		{
 			int pageSize = 9;

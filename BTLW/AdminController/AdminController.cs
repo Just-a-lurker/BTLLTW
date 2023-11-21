@@ -21,12 +21,13 @@ namespace BTLW.AdminController
         {
             _webHostEnvironment = webHostEnvironment;
         }
+        [Authentication]
         public IActionResult Index()
         {
             ViewBag.Time = System.DateTime.Now;
             return View();
         }
-        [Route("DanhMucTaiKhoan")]
+
         public IActionResult Register(int? page)
         {
             int pageSize = 8;
@@ -36,7 +37,7 @@ namespace BTLW.AdminController
             PagedList<TaiKhoan> a = new PagedList<TaiKhoan>(lstsp, pageNumber, pageSize);
             return View(a);
         }
-        [Route("ThemTaiKhoan")]
+
         [HttpGet]
         public IActionResult ThemTaiKhoan()
         {
@@ -48,7 +49,7 @@ namespace BTLW.AdminController
                             }, "Value", "Text");
             return View();
         }
-        [Route("ThemTaiKhoan")]
+
         [HttpPost]
         //[ValidateAntiForgeryToken]
         public IActionResult ThemTaiKhoan(TaiKhoan user)
@@ -69,7 +70,7 @@ namespace BTLW.AdminController
                 return RedirectToAction("Register", "Admin");
             }
         }
-        [Route("SuaTaiKhoan")]
+
         [HttpGet]
         public IActionResult SuaTaiKhoan(int mataikhoan)
         {
@@ -84,7 +85,7 @@ namespace BTLW.AdminController
 
             return View(sp);
         }
-        [Route("SuaTaiKhoan")]
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult SuaTaiKhoan(TaiKhoan user)
@@ -96,7 +97,7 @@ namespace BTLW.AdminController
 
 
         }
-        [Route("XoaTaiKhoan")]
+
         [HttpGet]
         public IActionResult XoaTaiKhoan(int mataikhoan)
         {
@@ -108,7 +109,7 @@ namespace BTLW.AdminController
             TempData["Message"] = "TK[" + mataikhoan + "] deleted";
             return RedirectToAction("Register", "Admin");
         }
-        [Route("DanhMucSanPham")]
+
         public IActionResult DanhMucSanPham(int ?page)
         {
             int pageSize = 8;
@@ -118,7 +119,7 @@ namespace BTLW.AdminController
             PagedList<DmnoiThat> a=new PagedList<DmnoiThat>(lstsp,pageNumber,pageSize); 
             return View(a); 
         }
-        [Route("ThemSanPhamMoi")]
+
         [HttpGet]
         public IActionResult ThemSanPhamMoi()
         {
@@ -150,7 +151,7 @@ namespace BTLW.AdminController
             
             //return View(dmnoiThat);
         }*/
-        [Route("ThemSanPhamMoi")]
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ThemSanPhamMoi(DmnoiThat dmnoiThat)
@@ -189,7 +190,7 @@ namespace BTLW.AdminController
             }
         }
 
-        [Route("SuaSanPham")]
+
         [HttpGet]
         public IActionResult SuaSanPham(string manoithat)
         {
@@ -203,7 +204,7 @@ namespace BTLW.AdminController
 
             return View(sp);
         }
-        [Route("SuaSanPham")]
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult SuaSanPham(DmnoiThat dmnoiThat)
@@ -230,7 +231,7 @@ namespace BTLW.AdminController
                 db.SaveChanges();
                 return RedirectToAction("DanhMucSanPham", "Admin");
         }
-        [Route("XoaSanPham")]
+
         [HttpGet]
         public IActionResult XoaSanPham(string manoithat)
         {
@@ -264,7 +265,7 @@ namespace BTLW.AdminController
             TempData["Message"] = manoithat +" deleted";
             return RedirectToAction("DanhMucSanPham", "Admin");
         }
-        [Route("ChiTietSanPham")]
+
         public IActionResult ChiTietSanPham(string manoithat)
         {
             ViewBag.MaNT = manoithat;
@@ -272,7 +273,7 @@ namespace BTLW.AdminController
             return View(sp);
         }
 
-        [Route("HDN")]
+
         public IActionResult HDN(int? page)
         {
             int pageSize = 10;
@@ -282,7 +283,7 @@ namespace BTLW.AdminController
             return View(lst);
         }
         
-        [Route("ThemHDN")]
+ 
         [HttpGet]
         public IActionResult ThemHDN()
         {
@@ -290,7 +291,7 @@ namespace BTLW.AdminController
             ViewBag.MaNcc = new SelectList(db.NhaCungCaps.ToList(), "MaNcc", "TenNcc");
             return View();
         }
-        [Route("ThemHDN")]
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ThemHDN(HoaDonNhap hoaDonNhap)
@@ -310,7 +311,7 @@ namespace BTLW.AdminController
             }
         }
 
-        [Route("SuaHDN")]
+
         [HttpGet]
         public IActionResult SuaHDN(string soHDN)
         {
@@ -320,7 +321,7 @@ namespace BTLW.AdminController
             var DK = db.HoaDonNhaps.Find(soHDN);
             return View(DK);
         }
-        [Route("SuaHDN")]
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult SuaHDN(HoaDonNhap hoaDonNhap)
@@ -329,7 +330,7 @@ namespace BTLW.AdminController
                 db.SaveChanges();
                 return RedirectToAction("HDN");
         }
-        [Route("XoaHDN")]
+
         [HttpGet]
         public IActionResult XoaHDN(string soHDN)
         {
@@ -359,7 +360,7 @@ namespace BTLW.AdminController
             return View(lst);
         }
 
-        [Route("ThemCTHDN")]
+
         [HttpGet]
         public IActionResult ThemCTHDN()
         {
@@ -367,7 +368,7 @@ namespace BTLW.AdminController
             ViewBag.SoHdn = new SelectList(db.HoaDonNhaps.ToList(), "SoHdn", "SoHdn", TempData["soN"]);
             return View();
         }
-        [Route("ThemCTHDN")]
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ThemCTHDN(ChiTietHdn chiTietHdn)
@@ -388,14 +389,14 @@ namespace BTLW.AdminController
             }
         }
 
-        [Route("SuaCTHDN")]
+
         [HttpGet]
         public IActionResult SuaCTHDN(string soHDN, string maNT)
         {
             var DK = db.ChiTietHdns.Find(maNT, soHDN);
             return View(DK);
         }
-        [Route("SuaCTHDN")]
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult SuaCTHDN(ChiTietHdn chiTietHdn)
@@ -405,7 +406,7 @@ namespace BTLW.AdminController
             return RedirectToAction("CTHDN", new { soHDN = chiTietHdn.SoHdn });
         }
 
-        [Route("XoaCTHDN")]
+
         [HttpGet]
         public IActionResult XoaCTHDN(string soHDN, string maNT)
         {
@@ -415,7 +416,7 @@ namespace BTLW.AdminController
         }
 
 
-        [Route("DDH")]
+
         public IActionResult DDH(int? page)
         {
             int pageSize = 10;
@@ -425,7 +426,7 @@ namespace BTLW.AdminController
             return View(lst);
         }
 
-        [Route("ThemDDH")]
+
         [HttpGet]
         public IActionResult ThemDDH()
         {
@@ -433,7 +434,7 @@ namespace BTLW.AdminController
             ViewBag.MaKhach = new SelectList(db.KhachHangs.ToList(), "MaKhach", "TenKhach");
             return View();
         }
-        [Route("ThemDDH")]
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ThemDDH(DonDatHang donDatHang)
@@ -453,7 +454,7 @@ namespace BTLW.AdminController
             }
         }
 
-        [Route("SuaDDH")]
+
         [HttpGet]
         public IActionResult SuaDDH(string soDDH)
         {
@@ -463,7 +464,7 @@ namespace BTLW.AdminController
             var DK = db.DonDatHangs.Find(soDDH);
             return View(DK);
         }
-        [Route("SuaDDH")]
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult SuaDDH(DonDatHang donDatHang)
@@ -473,7 +474,7 @@ namespace BTLW.AdminController
             return RedirectToAction("DDH");
         }
 
-        [Route("XoaDDH")]
+
         [HttpGet]
         public IActionResult XoaDDH(string soDDH)
         {
@@ -503,7 +504,7 @@ namespace BTLW.AdminController
             return View(lst);
         }
 
-        [Route("ThemCTDDH")]
+
         [HttpGet]
         public IActionResult ThemCTDDH()
         {
@@ -511,7 +512,7 @@ namespace BTLW.AdminController
             ViewBag.SoDdh = new SelectList(db.DonDatHangs.ToList(), "SoDdh", "SoDdh", TempData["soD"]);
             return View();
         }
-        [Route("ThemCTDDH")]
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ThemCTDDH(ChiTietHddh chiTietHddh)
@@ -532,14 +533,14 @@ namespace BTLW.AdminController
             }
         }
 
-        [Route("SuaCTDDH")]
+
         [HttpGet]
         public IActionResult SuaCTDDH(string soDDH, string maNT)
         {
             var DK = db.ChiTietHddhs.Find(maNT, soDDH);
             return View(DK);
         }
-        [Route("SuaCTDDH")]
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult SuaCTDDH(ChiTietHddh chiTietHddh)
@@ -549,7 +550,7 @@ namespace BTLW.AdminController
             return RedirectToAction("CTDDH", new { soDDH = chiTietHddh.SoDdh });
         }
 
-        [Route("XoaCTDDH")]
+
         [HttpGet]
         public IActionResult XoaCTDDH(string soDDH, string maNT)
         {
