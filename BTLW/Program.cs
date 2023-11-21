@@ -20,7 +20,11 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.AddSession();
-//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -39,8 +43,9 @@ app.MapRazorPages();
 //app.MapDefaultControllerRoute();
 //
 app.UseRouting();
-app.UseAuthentication();;
-
+app.UseAuthentication();
+app.UseCookiePolicy();
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
 app.MapControllerRoute(

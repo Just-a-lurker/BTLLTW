@@ -43,7 +43,6 @@ namespace BTLW.Controllers
                     var b=db.TaiKhoans.Where(x=>x.TenTk.Equals(user.TenTk)&&x.LoaiTk==false).FirstOrDefault();
                     if (b != null)
                     {
-                        return RedirectToAction("index", "main");
                         Response.Cookies.Append("UserLogin", b.TenTk.ToString(), new CookieOptions
                         {
                             Expires = DateTime.Now.AddDays(5)
@@ -52,6 +51,7 @@ namespace BTLW.Controllers
                         {
                             Expires = DateTime.Now.AddDays(5)
                         });
+                        return RedirectToAction("index", "main");
                     }
                     else
                     {
