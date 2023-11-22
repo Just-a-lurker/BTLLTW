@@ -20,7 +20,30 @@ namespace BTLW.Controllers
             return View(lstNoiThat);
 		}
 
-		public IActionResult ShopTheoLoai(int? page, string maLoai)
+        [HttpGet]
+        public IActionResult Timkiem()
+        {
+			return View();
+        }
+
+        [HttpPost]
+        public IActionResult Timkiem(DmnoiThat dm)
+        {
+            return RedirectToAction("Timkiem2", dm);
+        }
+
+
+        //[ValidateAntiForgeryToken]
+        public IActionResult Timkiem2(int? page, DmnoiThat dm)
+        {
+            int pageSize = 9;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+            var noiThat = db.DmnoiThats.Where(x => x.TenNoiThat.Contains(dm.Timkiem));
+            ViewBag.maLoai = dm.Timkiem;
+            PagedList<DmnoiThat> lstNoiThat = new PagedList<DmnoiThat>(noiThat, pageNumber, pageSize);
+            return View(lstNoiThat);
+        }
+        public IActionResult ShopTheoLoai(int? page, string maLoai)
 		{
 			int pageSize = 9;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;

@@ -1,0 +1,91 @@
+﻿@using X.PagedList.Mvc.Core;
+@model X.PagedList.PagedList<DmnoiThat>
+@{
+    ViewData["Title"] = "ShopTheoLoai";
+    Layout = "~/Views/Shared/_LayoutBeFurniture.cshtml";
+}
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content text-center">
+                    <h2>Shop</h2>
+                    <ul class="d-flex justify-content-center">
+                        <li><a asp-asp-controller="Main" asp-action="Index">Home</a></li>
+                        <li>></li>
+                        <li><a asp-controller="Main" asp-action="Shop">Shop</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- shop page section satrt -->
+<div class="shop_page_section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="shop_page_inner d-flex ">
+                    <div class="shop_sidebar_widget">
+                        <div class="shop_widget_thumb">
+                            <img src="../assets/hutche/assets/img/others/shop-sidebar.png" alt="">
+                        </div>
+                    </div>
+                    <div class="shop_right_sidaber">
+                        <div class="shop_top_bar d-flex justify-content-between">
+                            <div class="shop_product_count">
+                                <span>Show 9 / 12  / 18 / 24</span>
+                            </div>
+                            <div class="shop_top_right d-flex">
+                                <div class="product_sorting">
+                                    <select>
+                                        <option selected value="1">Default Sorting</option>
+                                        <option value="1">Default Sorting2</option>
+                                        <option value="1">Default Sorting3</option>
+                                        <option value="1">Default Sorting3</option>
+                                    </select>
+                                </div>
+                                <div class="shop_filter">
+                                    <select>
+                                        <option selected value="1">Filter</option>
+                                        <option value="1">Filter2</option>
+                                        <option value="1">Filter3</option>
+                                        <option value="1">Filter4</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="shop_gallery">
+                            <div id="displayProducts" class="row">
+                                @foreach (var item in Model)
+                                {
+                                    <div class="col-lg-4 col-md-4 col-sm-6">
+                                        <article class="single_product">
+                                            <figure>
+                                                <div class="product_thumb">
+                                                    <a asp-controller="Main" asp-action="Detail" asp-route-maNoiThat="@item.MaNoiThat"><img src="@Url.Content("../Image_Furniture/" + item.Anh)" alt=""></a>
+                                                </div>
+                                                <figcaption class="product_content">
+                                                    <h4><a asp-controller="Main" asp-action="Detail" asp-route-maNoiThat="@item.MaNoiThat">@item.TenNoiThat</a></h4>
+                                                    <div class="price_box">
+                                                        <span class="current_price">@item.DonGiaBan vnd</span>
+                                                    </div>
+                                                </figcaption>
+                                            </figure>
+                                        </article>
+                                    </div>
+                                }
+                                <div class="loding_bar">
+                                    <ul class="d-flex justify-content-center">
+                                        @Html.PagedListPager(Model, page=>Url.Action("Timkiem2", new {page = page, Timkiem = ViewBag.maLoai}))
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- shop page section end -->

@@ -40,7 +40,7 @@ namespace BTLW.Controllers
                 if (u != null)
                 {
                     HttpContext.Session.SetString("TenTK", u.TenTk.ToString());
-                    var b=db.TaiKhoans.Where(x=>x.TenTk.Equals(user.TenTk)&&x.LoaiTk==false).FirstOrDefault();
+                    var b = db.TaiKhoans.Where(x => x.TenTk.Equals(user.TenTk) && x.LoaiTk == false).FirstOrDefault();
                     if (b != null)
                     {
                         Response.Cookies.Append("UserLogin", b.TenTk.ToString(), new CookieOptions
@@ -60,9 +60,9 @@ namespace BTLW.Controllers
                         ViewBag.TenTK = uname;
                         ViewData["UserName"] = user.TenTk;
                         return RedirectToAction("index", "admin");
-                        
+
                     }
-                    
+
                 }
             }
             ViewBag.LoginFail = "Login Failed";
@@ -74,74 +74,32 @@ namespace BTLW.Controllers
             HttpContext.Session.Remove("TenTK");
             return RedirectToAction("Login", "Access");
         }
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View();
-        }
-        [HttpPost]
-        public IActionResult Register(RegisterVM Model)
-        {
-            TempData["Message"] = "";
-            var a = db.TaiKhoans.Where(x => x.TenTk.Equals(Model.TenTK)).ToList();
-            if(a.Count()>0)
-            {
-                TempData["Message"] = "Loi,trung ma";
-                return RedirectToAction("Register", "Access");
-            }else
-            {
-                TempData["Message"] = "OK";
-                var user = new TaiKhoan();
-                    user.TenTk = Model.TenTK;
-                    user.MatKhau = MD5Hash(Model.MatKhau);
-                    user.LoaiTk = Model.LoaiTK;
-                    db.TaiKhoans.Add(user);
-                    db.SaveChanges();
-                    ViewBag.Success = "Successful Registration";
-                    Model = new RegisterVM();
-                return RedirectToAction("Login", "Access");
 
-            }
-        }
         [HttpGet]
-        public IActionResult Signup()
+        public IActionResult ThemTaiKhoan()
         {
             return View();
         }
+
         [HttpPost]
-        public IActionResult Signup(TaiKhoan user)
+        //[ValidateAntiForgeryToken]
+        public IActionResult ThemTaiKhoan(TaiKhoan user)
         {
-            TempData["Message"] = "";
-            var a = db.TaiKhoans.FirstOrDefault(x => x.TenTk.Equals(user.TenTk));
-            if (a!=null)
+            var dm = db.TaiKhoans.Where(x => x.TenTk.Equals(user.TenTk)).ToList();
+            if (dm.Count > 0)
             {
-                TempData["Message"] = "LOI";
-                return RedirectToAction("Signup", "Access");
+                TempData["Message1"] = "trung ten tK";
+                return RedirectToAction("ThemTaiKhoan", "Access");
             }
             else
             {
-                TempData["Message"] = "OK";
-                user.MatKhau = MD5Hash(user.MatKhau);
+                //if (user.TenTk.ToString() != null && user.MatKhau.ToString() != null)
+                user.LoaiTk = false;
                 db.TaiKhoans.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Login", "Access");
             }
-            //return View(user);
-        }
-        public string MD5Hash(string input)
-        {
-            // Step 1, calculate MD5 hash from input
-            MD5 md5 = System.Security.Cryptography.MD5.Create();
-            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
-            byte[] hashBytes = md5.ComputeHash(inputBytes);
-
-            // Step 2, convert byte array to hex string
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < hashBytes.Length; i++)
-            {
-                sb.Append(hashBytes[i].ToString("X2"));
-            }
-            return sb.ToString();
-        }
+        
+    }
     }
 }
