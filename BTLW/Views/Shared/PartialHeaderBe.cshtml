@@ -18,7 +18,7 @@
                                 <ul class="sub-menu">
                                     <li><a asp-controller="Main" asp-action="AboutUs">About Us</a></li>
                                     <li><a asp-controller="Main" asp-action="ContactUs">Contact Us</a></li>
-                                    <li><a asp-controller="Access" asp-action="Logout">Sign out</a></li>
+                                   @*  <li><a asp-controller="Access" asp-action="Logout">Sign out</a></li> *@
                                 </ul>
                             </li>
                             <li class="menu-item-has-children">
@@ -75,7 +75,7 @@
                         <div class="header_account">
                             <ul class="d-flex">
                                 <li class="header_search_btn">
-                                    <a href="#">
+                                    <a asp-controller="Main" asp-action="Timkiem">
                                         <img src="../assets/hutche/assets/img/icon/search.png"
                                              alt="">
                                     </a>
@@ -167,13 +167,5 @@
 </div>
 <!--mini cart end-->
 <!-- page search box -->
-<div class="page_search_box">
-    <div class="search_close">
-        <i class="ion-close-round"></i>
-    </div>
-    <form class="border-bottom" action="#">
-        <input class="border-0" placeholder="Search products..." type="text">
-        <button type="submit"><i class="icofont-search"></i></button>
-    </form>
-</div>
+
 <!--header area end-->
